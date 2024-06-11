@@ -1,0 +1,18 @@
+--- /workspace/source/ft/ssrf/21-fasthttp-client-get/src.go
++++ /workspace/source/ft/ssrf/21-fasthttp-client-get/src.go
+@@ -16,6 +16,15 @@
+ 	// Create a new HTTP client
+ 	client := &fasthttp.Client{}
+ 	// Send the HTTP GET request
++	// OpenRefactory Warning:
++	// Possible Server-Side Request Forgery (SSRF)!
++	// Path:
++	//	File: src.go, Line: 15
++	//		urlParam := r.URL.Query().Get("url")
++	//		Variable 'urlParam' is assigned a tainted value.
++	//	File: src.go, Line: 19
++	//		client.Get(nil, urlParam)
++	//		Tainted information is used in a sink.
+ 	statusCode, body, err := client.Get(nil, urlParam)
+ 	if err != nil {
+ 		fmt.Printf("Error sending request: %s\n", err)

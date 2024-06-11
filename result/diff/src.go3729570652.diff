@@ -1,0 +1,12 @@
+--- /workspace/source/ft/os/07-os-exec-cmd-context-output/src.go
++++ /workspace/source/ft/os/07-os-exec-cmd-context-output/src.go
+@@ -14,6 +14,9 @@
+ 
+ func handler(w http.ResponseWriter, req *http.Request) {
+ 	cmdName := req.URL.Query().Get("cmd")
++	// OpenRefactory Warning:
++	// Possible context leak. The returned cancel function
++	// should not be ignored.
+ 	ctx, _ := context.WithTimeout(context.Background(), 3*time.Second)
+ 	cmd := exec.CommandContext(ctx, cmdName)
+ 	op, _ := cmd.Output()

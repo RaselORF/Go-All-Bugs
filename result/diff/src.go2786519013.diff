@@ -1,0 +1,11 @@
+--- /workspace/source/csa/02-csa-multiple-exp-self-assignment-Bug05/src.go
++++ /workspace/source/csa/02-csa-multiple-exp-self-assignment-Bug05/src.go
+@@ -8,6 +8,8 @@
+ }
+ 
+ func (point *Point) setPoint(x, y int) {
++	// OpenRefactory Warning:
++	// Unnecessary self assignment to x and y
+ 	x, y = x, y
+ }
+ 

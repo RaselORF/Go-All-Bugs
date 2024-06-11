@@ -1,0 +1,18 @@
+--- /workspace/source/ft/hck/01-crypto-tls-x509keypair-FLAKY/src.go
++++ /workspace/source/ft/hck/01-crypto-tls-x509keypair-FLAKY/src.go
+@@ -29,6 +29,15 @@
+ P/0PZQ/uiw5dyZmIpPI2k4661Kkvb01w3/F+WMqAUVWyNb0G9ntUl+HA
+ -----END PRIVATE KEY-----`)
+ 
++	// OpenRefactory Warning:
++	// Possible Hard Coded Key!
++	// Path:
++	//	File: src.go, Line: 17
++	//		certPEM := []byte(`-----BEGIN CERTIFICATE-----
++	//		Variable 'certPEM' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 32
++	//		tls.X509KeyPair(certPEM, keyPEM)
++	//		Tainted information is used in a sink.
+ 	cert, err := tls.X509KeyPair(certPEM, keyPEM)
+ 	if err != nil {
+ 		log.Fatal(err)

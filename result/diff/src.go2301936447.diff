@@ -1,0 +1,11 @@
+--- /workspace/source/csa/10-csa-self-assign-switch-statement-Bug09/src.go
++++ /workspace/source/csa/10-csa-self-assign-switch-statement-Bug09/src.go
+@@ -6,6 +6,8 @@
+ import "fmt"
+ 
+ func checkType(a interface{}) {
++	// OpenRefactory Warning:
++	// Unnecessary self assignment to a
+ 	switch a = a; a.(type) {
+ 	case int:
+ 		fmt.Println("a is integer")

@@ -1,0 +1,18 @@
+--- /workspace/source/ft/ssrf/06-net.dial/src.go
++++ /workspace/source/ft/ssrf/06-net.dial/src.go
+@@ -12,6 +12,15 @@
+ 
+ func handler(w http.ResponseWriter, r *http.Request) {
+ 	address := r.URL.Query().Get("address")
++	// OpenRefactory Warning:
++	// Possible Server-Side Request Forgery (SSRF)!
++	// Path:
++	//	File: src.go, Line: 14
++	//		address := r.URL.Query().Get("address")
++	//		Variable 'address' is assigned a tainted value.
++	//	File: src.go, Line: 15
++	//		net.Dial("tcp", address)
++	//		Tainted information is used in a sink.
+ 	conn, err := net.Dial("tcp", address)
+ 	if err != nil {
+ 		fmt.Fprintf(w, "Error connecting to address: %v", err)

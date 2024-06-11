@@ -1,0 +1,27 @@
+--- /workspace/source/ft/os/25-pass-taint-via-param-field/src.go
++++ /workspace/source/ft/os/25-pass-taint-via-param-field/src.go
+@@ -15,6 +15,24 @@
+ }
+ 
+ func (b Box) Run() {
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 23
++	//		vals := req.URL.Query()
++	//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 29
++	//		name := v.Get("cmd")
++	//		Variable 'name' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 30
++	//		b.cmd = exec.Command(name)
++	//		Variable 'b.cmd' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 25
++	//		box.Run()
++	//		Tainted information is passed through the function call via 'box' to the receiver 'b' through the field 'cmd' (from type Box)
++	//	File: src.go, Line: 18
++	//		b.cmd.Run()
++	//		Tainted information is used in a sink.
+ 	b.cmd.Run()
+ }
+ 

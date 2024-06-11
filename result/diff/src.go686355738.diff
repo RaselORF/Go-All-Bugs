@@ -1,0 +1,21 @@
+--- /workspace/source/ft/sql/22-database-sql-db-QueryContext/src.go
++++ /workspace/source/ft/sql/22-database-sql-db-QueryContext/src.go
+@@ -20,6 +20,18 @@
+ 	username := r.FormValue("username")
+ 	query := fmt.Sprintf("SELECT * FROM users WHERE username = %s", username)
+ 	ctx := context.Background()
++	// OpenRefactory Warning:
++	// Possible SQL Injection!
++	// Path:
++	//	File: src.go, Line: 20
++	//		username := r.FormValue("username")
++	//		Variable 'username' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 21
++	//		query := fmt.Sprintf("SELECT * FROM users WHERE username = %s", username)
++	//		Variable 'query' is assigned a tainted value.
++	//	File: src.go, Line: 23
++	//		db.QueryContext(ctx, query, username)
++	//		Tainted information is used in a sink.
+ 	rows, _ := db.QueryContext(ctx, query, username)
+ 	defer rows.Close()
+ 	for rows.Next() {

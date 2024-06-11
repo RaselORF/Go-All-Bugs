@@ -1,0 +1,30 @@
+--- /workspace/source/ft/sql/26-jmoiron-sqlx-queryx/src.go
++++ /workspace/source/ft/sql/26-jmoiron-sqlx-queryx/src.go
+@@ -29,6 +29,27 @@
+ 		panic(err)
+ 	}
+ 
++	// OpenRefactory Warning:
++	// Possible SQL Injection!
++	// Path:
++	//	File: src.go, Line: 56
++	//		return req.URL.Query().Get("username")
++	//		A tainted value is returned from the function call.
++	//	File: src.go, Line: 17
++	//		username := getUserName(r)
++	//		Variable 'username' is assigned a tainted value.
++	//	File: src.go, Line: 59
++	//		return req.URL.Query().Get("password")
++	//		A tainted value is returned from the function call.
++	//	File: src.go, Line: 18
++	//		password := getPass(r)
++	//		Variable 'password' is assigned a tainted value.
++	//	File: src.go, Line: 19
++	//		query := fmt.Sprintf("SELECT * FROM users WHERE username='%s' AND password='%s'", username, password)
++	//		Variable 'query' is assigned a tainted value.
++	//	File: src.go, Line: 32
++	//		tx.Queryx(query)
++	//		Tainted information is used in a sink.
+ 	rows, err := tx.Queryx(query)
+ 	if err != nil {
+ 		fmt.Print("Error")

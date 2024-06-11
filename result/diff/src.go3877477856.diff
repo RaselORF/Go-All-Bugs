@@ -1,0 +1,21 @@
+--- /workspace/source/ft/ssrf/31-http-client-Head/src.go
++++ /workspace/source/ft/ssrf/31-http-client-Head/src.go
+@@ -13,6 +13,18 @@
+ 	target := req.FormValue("targetURL")
+ 	url := fmt.Sprintf("https://%s.example.com/data/", target)
+ 	client := &http.Client{}
++	// OpenRefactory Warning:
++	// Possible Server-Side Request Forgery (SSRF)!
++	// Path:
++	//	File: src.go, Line: 13
++	//		target := req.FormValue("targetURL")
++	//		Variable 'target' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 14
++	//		url := fmt.Sprintf("https://%s.example.com/data/", target)
++	//		Variable 'url' is assigned a tainted value.
++	//	File: src.go, Line: 16
++	//		client.Head(url)
++	//		Tainted information is used in a sink.
+ 	resp, err := client.Head(url)
+ 	if err != nil {
+ 		fmt.Println(err)

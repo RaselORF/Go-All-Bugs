@@ -1,0 +1,18 @@
+--- /workspace/source/main.go
++++ /workspace/source/main.go
+@@ -12,6 +12,15 @@
+ 
+ func handler(c echo.Context) error {
+ 	url := c.QueryParam("url")
++	// OpenRefactory Warning:
++	// Possible URL Redirection To Untrusted Site (Open Redirect)!
++	// Path:
++	//	File: main.go, Line: 14
++	//		url := c.QueryParam("url")
++	//		Variable 'url' is assigned a tainted value from an external source.
++	//	File: main.go, Line: 15
++	//		c.Redirect(http.StatusFound, url)
++	//		Tainted information is used in a sink.
+ 	return c.Redirect(http.StatusFound, url)
+ }
+ func main() {

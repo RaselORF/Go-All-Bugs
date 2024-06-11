@@ -1,0 +1,30 @@
+--- /workspace/source/ft/os/59-map-key-taint/src.go
++++ /workspace/source/ft/os/59-map-key-taint/src.go
+@@ -15,6 +15,27 @@
+ 	ss[cmdName] = "command"
+ 	for key := range ss {
+ 		cmd := exec.Command(key)
++		// OpenRefactory Warning:
++		// Possible OS Command Injection!
++		// Path:
++		//	File: src.go, Line: 12
++		//		vals := req.URL.Query()
++		//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 13
++		//		cmdName := vals.Get("cmd")
++		//		Variable 'cmdName' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 15
++		//		ss[cmdName]
++		//		Map key 'cmdName' is assigned a tainted value.
++		//	File: src.go, Line: 16
++		//		for key := range ss {
++		//		Variable 'key' is assigned a tainted value.
++		//	File: src.go, Line: 17
++		//		cmd := exec.Command(key)
++		//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 18
++		//		cmd.Run()
++		//		Tainted information is used in a sink.
+ 		cmd.Run()
+ 	}
+ }

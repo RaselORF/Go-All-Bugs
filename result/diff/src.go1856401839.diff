@@ -1,0 +1,12 @@
+--- /workspace/source/cmc/cmc-2/09-cmc-uintptr-GEQ-Bug06/src.go
++++ /workspace/source/cmc/cmc-2/09-cmc-uintptr-GEQ-Bug06/src.go
+@@ -14,6 +14,9 @@
+ 		a int64
+ 	}
+ 	u := unsafe.Alignof(x.a)
++	// OpenRefactory Warning:
++	// Unsigned integer comparison should be meaningful.
++	// The expression 'u >= 0' will always evaluate to true.
+ 	if u >= 0 {
+ 		fmt.Println("Alignment is greater than zero")
+ 	}

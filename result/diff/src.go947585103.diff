@@ -1,0 +1,18 @@
+--- /workspace/source/ft/path/07-os-mkdir/src.go
++++ /workspace/source/ft/path/07-os-mkdir/src.go
+@@ -17,6 +17,15 @@
+ 		fmt.Println("Error creating directory:", err)
+ 		return
+ 	}
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 14
++	//		path := r.URL.Query().Get("path")
++	//		Variable 'path' is assigned a tainted value.
++	//	File: src.go, Line: 20
++	//		os.RemoveAll(path)
++	//		Tainted information is used in a sink.
+ 	defer os.RemoveAll(path)
+ 
+ 	fmt.Println("Directory created:", path)

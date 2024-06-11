@@ -1,0 +1,29 @@
+--- /workspace/source/ft/os/41-taint-str-concat/src.go
++++ /workspace/source/ft/os/41-taint-str-concat/src.go
+@@ -19,5 +19,26 @@
+ 
+ func bar(comm string) {
+ 	cmd := exec.Command(comm)
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 12
++	//		vals := req.URL.Query()
++	//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 13
++	//		vals.Get("cmd")
++	//		Tainted information passed through a function call.
++	//	File: src.go, Line: 13
++	//		foo("rm -f " + vals.Get("cmd"))
++	//		Tainted information is passed through the function call via '"rm -f " + vals.Get("cmd")' to the parameter 'cmd'
++	//	File: src.go, Line: 17
++	//		bar(cmd)
++	//		Tainted information is passed through the function call via 'cmd' to the parameter 'comm'
++	//	File: src.go, Line: 21
++	//		cmd := exec.Command(comm)
++	//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 22
++	//		cmd.Run()
++	//		Tainted information is used in a sink.
+ 	cmd.Run()
+ }

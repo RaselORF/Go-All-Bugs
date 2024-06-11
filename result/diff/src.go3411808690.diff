@@ -1,0 +1,18 @@
+--- /workspace/source/ft/path/16-os-mkdirall/src.go
++++ /workspace/source/ft/path/16-os-mkdirall/src.go
+@@ -13,6 +13,15 @@
+ func handler(w http.ResponseWriter, r *http.Request) {
+ 	path := r.URL.Query().Get("path")
+ 	// Create the directory and all its parents if they don't exist
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 14
++	//		path := r.URL.Query().Get("path")
++	//		Variable 'path' is assigned a tainted value.
++	//	File: src.go, Line: 16
++	//		os.MkdirAll(path, 0755)
++	//		Tainted information is used in a sink.
+ 	err := os.MkdirAll(path, 0755)
+ 	if err != nil {
+ 		fmt.Println("Error creating directory:", err)

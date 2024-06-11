@@ -1,0 +1,29 @@
+--- /workspace/source/ft/os/46-array-taint-pending/src.go
++++ /workspace/source/ft/os/46-array-taint-pending/src.go
+@@ -17,5 +17,26 @@
+ 
+ func foo(cs *[2]string) {
+ 	cmd := exec.Command(cs[0])
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 12
++	//		vals := req.URL.Query()
++	//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 13
++	//		cmdName := vals.Get("cmd")
++	//		Variable 'cmdName' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 14
++	//		ss := [2]string{cmdName, "-f"}
++	//		Variable 'ss' is assigned a tainted value.
++	//	File: src.go, Line: 15
++	//		foo(&ss)
++	//		Tainted information is passed through the function call via '&ss' to the parameter 'cs'
++	//	File: src.go, Line: 19
++	//		cmd := exec.Command(cs[0])
++	//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 20
++	//		cmd.Run()
++	//		Tainted information is used in a sink.
+ 	cmd.Run()
+ }

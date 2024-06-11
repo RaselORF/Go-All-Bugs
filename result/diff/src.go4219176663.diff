@@ -1,0 +1,18 @@
+--- /workspace/source/ft/xss/11-gin-context-purejson/src.go
++++ /workspace/source/ft/xss/11-gin-context-purejson/src.go
+@@ -25,6 +25,15 @@
+ 		if err := c.BindJSON(&newAlbum); err != nil {
+ 			fmt.Print(err)
+ 		}
++		// OpenRefactory Warning:
++		// Possible Cross-Site Scripting (XSS)!
++		// Path:
++		//	File: src.go, Line: 25
++		//		c.BindJSON(&newAlbum)
++		//		Tainted information is coming from an external source.
++		//	File: src.go, Line: 28
++		//		c.PureJSON(http.StatusCreated, newAlbum)
++		//		Tainted information is used in a sink.
+ 		c.PureJSON(http.StatusCreated, newAlbum)
+ 	})
+ 

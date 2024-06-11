@@ -1,0 +1,21 @@
+--- /workspace/source/ft/path/05-ioutil-tempdir/src.go
++++ /workspace/source/ft/path/05-ioutil-tempdir/src.go
+@@ -18,6 +18,18 @@
+ 		fmt.Println("Error creating temporary directory:", err)
+ 		return
+ 	}
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 15
++	//		path := r.URL.Query().Get("path")
++	//		Variable 'path' is assigned a tainted value.
++	//	File: src.go, Line: 16
++	//		dir, err := ioutil.TempDir(path, "example")
++	//		Variable 'dir' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 21
++	//		os.RemoveAll(dir)
++	//		Tainted information is used in a sink.
+ 	defer os.RemoveAll(dir)
+ 
+ 	fmt.Println("Temporary directory created:", dir)

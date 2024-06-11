@@ -1,0 +1,18 @@
+--- /workspace/source/ft/path/13-os-writefile/src.go
++++ /workspace/source/ft/path/13-os-writefile/src.go
+@@ -13,6 +13,15 @@
+ func handler(w http.ResponseWriter, r *http.Request) {
+ 	path := r.URL.Query().Get("path")
+ 	data := []byte("This is a new line.\n")
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 14
++	//		path := r.URL.Query().Get("path")
++	//		Variable 'path' is assigned a tainted value.
++	//	File: src.go, Line: 16
++	//		os.WriteFile(path, data, 0644)
++	//		Tainted information is used in a sink.
+ 	err := os.WriteFile(path, data, 0644)
+ 	if err != nil {
+ 		fmt.Println("Error writing to file:", err)

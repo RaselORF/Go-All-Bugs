@@ -1,0 +1,26 @@
+--- /workspace/source/ft/os/61-map-value-taint/src.go
++++ /workspace/source/ft/os/61-map-value-taint/src.go
+@@ -14,5 +14,23 @@
+ 	ss := make(map[string]string)
+ 	ss["command"] = cmdName
+ 	cmd := exec.Command(ss["command"])
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 12
++	//		vals := req.URL.Query()
++	//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 13
++	//		cmdName := vals.Get("cmd")
++	//		Variable 'cmdName' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 15
++	//		ss["command"] = cmdName
++	//		Variable 'ss["command"]' is assigned a tainted value.
++	//	File: src.go, Line: 16
++	//		cmd := exec.Command(ss["command"])
++	//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 17
++	//		cmd.Run()
++	//		Tainted information is used in a sink.
+ 	cmd.Run()
+ }

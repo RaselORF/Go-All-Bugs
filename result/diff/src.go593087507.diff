@@ -1,0 +1,18 @@
+--- /workspace/source/ft/os/09-syscall-fork-exec-FLAKY/src.go
++++ /workspace/source/ft/os/09-syscall-fork-exec-FLAKY/src.go
+@@ -14,6 +14,15 @@
+ 	cmdName := req.FormValue("cmd")
+ 	args := []string{req.FormValue("arg0")}
+ 
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 15
++	//		args := []string{req.FormValue("arg0")}
++	//		Variable 'args' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 17
++	//		syscall.ForkExec(cmdName, args, &syscall.ProcAttr{})
++	//		Tainted information is used in a sink.
+ 	pid, err := syscall.ForkExec(cmdName, args, &syscall.ProcAttr{})
+ 	if err != nil {
+ 		log.Println(err)

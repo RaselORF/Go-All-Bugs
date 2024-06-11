@@ -1,0 +1,21 @@
+--- /workspace/source/ft/sql/23-jmoiron-sqlx-queryx-wrong/src.go
++++ /workspace/source/ft/sql/23-jmoiron-sqlx-queryx-wrong/src.go
+@@ -20,6 +20,18 @@
+ 
+ 	username := r.FormValue("username")
+ 	query := "SELECT * FROM users WHERE name = " + username
++	// OpenRefactory Warning:
++	// Possible SQL Injection!
++	// Path:
++	//	File: src.go, Line: 21
++	//		username := r.FormValue("username")
++	//		Variable 'username' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 22
++	//		query := "SELECT * FROM users WHERE name = " + username
++	//		Variable 'query' is assigned a tainted value.
++	//	File: src.go, Line: 23
++	//		db.Queryx(query)
++	//		Tainted information is used in a sink.
+ 	_, err := db.Queryx(query)
+ 	if err != nil {
+ 		fmt.Print(err)

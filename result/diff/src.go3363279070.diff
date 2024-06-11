@@ -1,0 +1,11 @@
+--- /workspace/source/ft/sql/22-database-sql-db-QueryContext/src.go
++++ /workspace/source/ft/sql/22-database-sql-db-QueryContext/src.go
+@@ -33,5 +33,8 @@
+ 
+ func main() {
+ 	http.HandleFunc("/", signupHandler)
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8090", nil)
+ }

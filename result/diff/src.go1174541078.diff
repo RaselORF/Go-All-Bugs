@@ -1,0 +1,12 @@
+--- /workspace/source/cic/cic-2/02-cic-cors-New-Bug25/src.go
++++ /workspace/source/cic/cic-2/02-cic-cors-New-Bug25/src.go
+@@ -13,6 +13,9 @@
+ const starVal = "*"
+ 
+ func test() {
++	// OpenRefactory Warning:
++	// Setting '*' in 'AllowedOrigins' will enable
++	// a loose CORS policy which is security sensitive.
+ 	c := cors.New(cors.Options{
+ 		AllowedOrigins:   []string{starVal},
+ 		AllowCredentials: true,

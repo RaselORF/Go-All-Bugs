@@ -1,0 +1,10 @@
+--- /workspace/source/mhsc/mhsc-1/04-mhsc-HttpOnly-flag-true-no-fix-Bug-26/src.go
++++ /workspace/source/mhsc/mhsc-1/04-mhsc-HttpOnly-flag-true-no-fix-Bug-26/src.go
+@@ -10,6 +10,7 @@
+ 		Name:     name,
+ 		Value:    value,
+ 		HttpOnly: true,
++		Secure:   true,
+ 	})
+ }
+ 

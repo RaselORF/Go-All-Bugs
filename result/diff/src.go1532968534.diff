@@ -1,0 +1,11 @@
+--- /workspace/source/ft/ssrf/29-http-Head/src.go
++++ /workspace/source/ft/ssrf/29-http-Head/src.go
+@@ -22,5 +22,8 @@
+ 
+ func main() {
+ 	http.HandleFunc("/", handler)
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8090", nil)
+ }

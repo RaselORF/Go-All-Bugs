@@ -1,0 +1,18 @@
+--- /workspace/source/ft/os/10-syscall-start-process-FLAKY/src.go
++++ /workspace/source/ft/os/10-syscall-start-process-FLAKY/src.go
+@@ -23,6 +23,15 @@
+ 			Setpgid: true,
+ 		},
+ 	}
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 15
++	//		cmdName := req.FormValue("cmd")
++	//		Variable 'cmdName' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 26
++	//		os.StartProcess(cmdName, args, procAttr)
++	//		Tainted information is used in a sink.
+ 	process, err := os.StartProcess(cmdName, args, procAttr)
+ 	if err != nil {
+ 		fmt.Println(err.Error())

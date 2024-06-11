@@ -1,0 +1,28 @@
+--- /workspace/source/ft/xss/20-fiber-context-jsonp/src.go
++++ /workspace/source/ft/xss/20-fiber-context-jsonp/src.go
+@@ -6,13 +6,24 @@
+ 
+ import (
+ 	"github.com/gofiber/fiber"
++	"github.com/microcosm-cc/bluemonday"
+ )
+ 
+ func MyHandler(c *fiber.Ctx) {
+ 	callback := c.Query("callback")
+ 	Data := c.Query("data")
+ 	// Send a JSONP response with the data object
+-	c.JSONP(Data, callback)
++	// OpenRefactory Warning:
++	// Possible Cross-Site Scripting (XSS)!
++	// Path:
++	//	File: src.go, Line: 13
++	//		Data := c.Query("data")
++	//		Variable 'Data' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 15
++	//		c.JSONP(Data, callback)
++	//		Tainted information is used in a sink.
++	// Fix: iCR sanitizes the tainted input.
++	c.JSONP(bluemonday.UGCPolicy().Sanitize(Data), callback)
+ }
+ 
+ func main() {

@@ -1,0 +1,12 @@
+--- /workspace/source/ft/sql/26-jmoiron-sqlx-queryx/src.go
++++ /workspace/source/ft/sql/26-jmoiron-sqlx-queryx/src.go
+@@ -49,6 +49,9 @@
+ 
+ func main() {
+ 	http.HandleFunc("/", loginHandler)
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8090", nil)
+ }
+ 

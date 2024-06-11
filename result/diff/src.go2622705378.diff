@@ -1,0 +1,12 @@
+--- /workspace/source/mhsc/mhsc-1/01-mhsc-HttpOnly-flag-false-Bug-26/src.go
++++ /workspace/source/mhsc/mhsc-1/01-mhsc-HttpOnly-flag-false-Bug-26/src.go
+@@ -9,7 +9,8 @@
+ 	http.SetCookie(w, &http.Cookie{
+ 		Name:     name,
+ 		Value:    value,
+-		HttpOnly: false,
++		HttpOnly: true,
++		Secure:   true,
+ 	})
+ }
+ 

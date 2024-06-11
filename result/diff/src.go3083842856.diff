@@ -1,0 +1,24 @@
+--- /workspace/source/ft/sanitizers/06-bluemonday-xss-sanitizer-os-injection/src.go
++++ /workspace/source/ft/sanitizers/06-bluemonday-xss-sanitizer-os-injection/src.go
+@@ -16,6 +16,21 @@
+ 	p := bluemonday.UGCPolicy()
+ 	sanitized := p.Sanitize(param)
+ 	cmd := exec.Command(sanitized)
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 15
++	//		param := r.URL.Query().Get("param")
++	//		Variable 'param' is assigned a tainted value.
++	//	File: src.go, Line: 17
++	//		sanitized := p.Sanitize(param)
++	//		Variable 'sanitized' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 18
++	//		cmd := exec.Command(sanitized)
++	//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 19
++	//		cmd.Run()
++	//		Tainted information is used in a sink.
+ 	cmd.Run()
+ }
+ 

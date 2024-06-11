@@ -1,0 +1,11 @@
+--- /workspace/source/ft/sql/27-database-sql-db-queryRow-FLAKY/src.go
++++ /workspace/source/ft/sql/27-database-sql-db-queryRow-FLAKY/src.go
+@@ -50,5 +50,8 @@
+ 
+ func main() {
+ 	http.HandleFunc("/", handler)
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8090", nil)
+ }

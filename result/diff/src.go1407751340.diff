@@ -1,0 +1,12 @@
+--- /workspace/source/cic/cic-4/01-cic-cors-New-Bug25/src.go
++++ /workspace/source/cic/cic-4/01-cic-cors-New-Bug25/src.go
+@@ -11,6 +11,9 @@
+ )
+ 
+ func main() {
++	// OpenRefactory Warning:
++	// Using default 'AllowOrigins' or setting '*' in 'AllowOrigins'
++	// will enable a loose CORS policy which is security sensitive.
+ 	a := cors.New(cors.Config{
+ 		AllowOrigins: "*",
+ 		AllowHeaders: "Origin, Content-Type, Accept",

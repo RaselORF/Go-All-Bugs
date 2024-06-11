@@ -1,0 +1,21 @@
+--- /workspace/source/ft/sql/30-modl-transection-exec/src.go
++++ /workspace/source/ft/sql/30-modl-transection-exec/src.go
+@@ -37,6 +37,18 @@
+ 	}
+ 
+ 	// Execute a SQL statement within the transaction
++	// OpenRefactory Warning:
++	// Possible SQL Injection!
++	// Path:
++	//	File: src.go, Line: 19
++	//		username := r.FormValue("username")
++	//		Variable 'username' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 20
++	//		query := fmt.Sprintf("SELECT * FROM users WHERE username = %s", username)
++	//		Variable 'query' is assigned a tainted value.
++	//	File: src.go, Line: 40
++	//		tx.Exec(query)
++	//		Tainted information is used in a sink.
+ 	_, err = tx.Exec(query)
+ 	if err != nil {
+ 		log.Fatal(err)

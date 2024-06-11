@@ -1,0 +1,18 @@
+--- /workspace/source/ft/path/10-os-create/src.go
++++ /workspace/source/ft/path/10-os-create/src.go
+@@ -18,6 +18,15 @@
+ 		return
+ 	}
+ 	defer file.Close()
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 14
++	//		path := r.URL.Query().Get("path")
++	//		Variable 'path' is assigned a tainted value.
++	//	File: src.go, Line: 21
++	//		os.Remove(path)
++	//		Tainted information is used in a sink.
+ 	defer os.Remove(path)
+ 
+ 	w.Write([]byte("Hello"))

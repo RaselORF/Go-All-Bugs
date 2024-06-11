@@ -1,0 +1,12 @@
+--- /workspace/source/cmc/cmc-1/02-cmc-cap-LSS-Bug06/src.go
++++ /workspace/source/cmc/cmc-1/02-cmc-cap-LSS-Bug06/src.go
+@@ -10,6 +10,9 @@
+ 
+ func test() {
+ 	var a [10]int
++	// OpenRefactory Warning:
++	// len or cap comparison should be meaningful.
++	// The expression 'cap(a) < 0' will always evaluate to false.
+ 	if cap(a) < 0 {
+ 		fmt.Println("Capacity is negative")
+ 	}

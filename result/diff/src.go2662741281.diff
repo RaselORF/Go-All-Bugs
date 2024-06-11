@@ -1,0 +1,27 @@
+--- /workspace/source/ft/os/90-pass-taint-to-caller/src.go
++++ /workspace/source/ft/os/90-pass-taint-to-caller/src.go
+@@ -13,6 +13,24 @@
+ func HandleReq(req *http.Request) {
+ 	cmdName := GetCmdName(req)
+ 	cmd := exec.Command(cmdName)
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 20
++	//		vals := req.URL.Query()
++	//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 21
++	//		return vals.Get("cmd")
++	//		A tainted value is returned from the function call.
++	//	File: src.go, Line: 14
++	//		cmdName := GetCmdName(req)
++	//		Variable 'cmdName' is assigned a tainted value.
++	//	File: src.go, Line: 15
++	//		cmd := exec.Command(cmdName)
++	//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 16
++	//		cmd.Run()
++	//		Tainted information is used in a sink.
+ 	cmd.Run()
+ }
+ 

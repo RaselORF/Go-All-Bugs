@@ -1,0 +1,30 @@
+--- /workspace/source/ft/xss/18-fiber-context-sendStream/src.go
++++ /workspace/source/ft/xss/18-fiber-context-sendStream/src.go
+@@ -9,12 +9,26 @@
+ 	"strings"
+ 
+ 	"github.com/gofiber/fiber"
++	"github.com/microcosm-cc/bluemonday"
+ )
+ 
+ func MyHandler(c *fiber.Ctx) {
+ 	name := c.Query("name")
+ 	html := fmt.Sprintf("<h1>Hello, %s!</h1>", name)
+-	c.SendStream(strings.NewReader(html))
++	// OpenRefactory Warning:
++	// Possible Cross-Site Scripting (XSS)!
++	// Path:
++	//	File: src.go, Line: 15
++	//		name := c.Query("name")
++	//		Variable 'name' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 16
++	//		html := fmt.Sprintf("<h1>Hello, %s!</h1>", name)
++	//		Variable 'html' is assigned a tainted value.
++	//	File: src.go, Line: 17
++	//		c.SendStream(strings.NewReader(html))
++	//		Tainted information is passed through a function call and is used in a sink.
++	// Fix: iCR sanitizes the tainted input.
++	c.SendStream(bluemonday.UGCPolicy().SanitizeReader(strings.NewReader(html)))
+ }
+ func main() {
+ 	app := fiber.New()

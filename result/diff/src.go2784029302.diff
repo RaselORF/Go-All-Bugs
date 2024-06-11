@@ -1,0 +1,13 @@
+--- /workspace/source/cur/cur-1/01-defer-recover-directly-Bug10/src.go
++++ /workspace/source/cur/cur-1/01-defer-recover-directly-Bug10/src.go
+@@ -5,7 +5,9 @@
+ package testdata
+ 
+ func panicRecover() {
+-	defer recover()
++	defer func() {
++		recover()
++	}()
+ 	panic("Lets panic")
+ }
+ 

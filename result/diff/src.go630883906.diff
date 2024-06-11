@@ -1,0 +1,12 @@
+--- /workspace/source/ft/hci/06-hardcoded-ip-method/src.go
++++ /workspace/source/ft/hci/06-hardcoded-ip-method/src.go
+@@ -12,6 +12,9 @@
+ 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+ 		fmt.Fprintf(w, "Hello, World!")
+ 	})
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(getIP(), nil)
+ }
+ 

@@ -1,0 +1,12 @@
+--- /workspace/source/cic/cic-3/01-cic-cors-AllowAll-Bug25/src.go
++++ /workspace/source/cic/cic-3/01-cic-cors-AllowAll-Bug25/src.go
+@@ -16,6 +16,9 @@
+ 		w.Write([]byte("{\"hello\": \"world\"}"))
+ 	})
+ 
++	// OpenRefactory Warning:
++	// AllowAll() creates a configuration with loose
++	// CORS policy which is security sensitive.
+ 	handler := cors.AllowAll().Handler(mux)
+ 	http.ListenAndServe(":8080", handler)
+ }

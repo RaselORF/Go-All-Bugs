@@ -1,0 +1,11 @@
+--- /workspace/source/ft/xss/05-http-responsewriter-write/src.go
++++ /workspace/source/ft/xss/05-http-responsewriter-write/src.go
+@@ -14,5 +14,8 @@
+ 
+ func main() {
+ 	http.HandleFunc("/", server)
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":5000", nil)
+ }

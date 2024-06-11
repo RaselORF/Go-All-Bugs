@@ -1,0 +1,18 @@
+--- /workspace/source/ft/path/12-os-readfile/src.go
++++ /workspace/source/ft/path/12-os-readfile/src.go
+@@ -12,6 +12,15 @@
+ 
+ func handler(w http.ResponseWriter, r *http.Request) {
+ 	path := r.URL.Query().Get("path")
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 14
++	//		path := r.URL.Query().Get("path")
++	//		Variable 'path' is assigned a tainted value.
++	//	File: src.go, Line: 15
++	//		os.ReadFile(path)
++	//		Tainted information is used in a sink.
+ 	data, err := os.ReadFile(path)
+ 	if err != nil {
+ 		fmt.Println("Error reading file:", err)

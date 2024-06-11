@@ -1,0 +1,11 @@
+--- /workspace/source/ft/session/07-http-header-set/src.go
++++ /workspace/source/ft/session/07-http-header-set/src.go
+@@ -14,5 +14,8 @@
+ 		w.Header().Set("Set-Cookie", sessionID)
+ 		w.Write([]byte("Hello, World!"))
+ 	})
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8080", nil)
+ }

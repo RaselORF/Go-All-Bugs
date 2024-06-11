@@ -1,0 +1,18 @@
+--- /workspace/source/ft/xss/06-gin-context-indentedjson/src.go
++++ /workspace/source/ft/xss/06-gin-context-indentedjson/src.go
+@@ -21,6 +21,15 @@
+ 	if err := c.BindJSON(&newAlbum); err != nil {
+ 		fmt.Print(err)
+ 	}
++	// OpenRefactory Warning:
++	// Possible Cross-Site Scripting (XSS)!
++	// Path:
++	//	File: src.go, Line: 21
++	//		c.BindJSON(&newAlbum)
++	//		Tainted information is coming from an external source.
++	//	File: src.go, Line: 24
++	//		c.IndentedJSON(http.StatusCreated, newAlbum)
++	//		Tainted information is used in a sink.
+ 	c.IndentedJSON(http.StatusCreated, newAlbum)
+ }
+ func main() {

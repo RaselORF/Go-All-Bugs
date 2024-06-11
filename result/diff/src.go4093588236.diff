@@ -1,0 +1,30 @@
+--- /workspace/source/ft/os/70-map-value-taint/src.go
++++ /workspace/source/ft/os/70-map-value-taint/src.go
+@@ -22,6 +22,27 @@
+ func foo(pm map[string]Box) {
+ 	for _, bx := range pm {
+ 		cmd := exec.Command(bx.data)
++		// OpenRefactory Warning:
++		// Possible OS Command Injection!
++		// Path:
++		//	File: src.go, Line: 16
++		//		vals := req.URL.Query()
++		//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 17
++		//		cmdName := vals.Get("cmd")
++		//		Variable 'cmdName' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 18
++		//		bm := map[string]Box{"cmd": {cmdName}}
++		//		Variable 'bm' is assigned a tainted value from the initialization of Field 'data' (from type Box).
++		//	File: src.go, Line: 19
++		//		foo(bm)
++		//		Tainted information is passed through the function call via 'bm' to the parameter 'pm' through the field 'data' (from type Box)
++		//	File: src.go, Line: 24
++		//		cmd := exec.Command(bx.data)
++		//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 25
++		//		cmd.Run()
++		//		Tainted information is used in a sink.
+ 		cmd.Run()
+ 	}
+ }

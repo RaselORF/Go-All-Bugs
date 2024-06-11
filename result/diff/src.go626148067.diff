@@ -1,0 +1,24 @@
+--- /workspace/source/ft/sql/13-jinzhu-gorm-db-exec-raw/src.go
++++ /workspace/source/ft/sql/13-jinzhu-gorm-db-exec-raw/src.go
+@@ -28,6 +28,21 @@
+ 	query := fmt.Sprintf("SELECT * FROM users WHERE username='%s' AND password='%s'", username, password)
+ 
+ 	var users []User
++	// OpenRefactory Warning:
++	// Possible SQL Injection!
++	// Path:
++	//	File: src.go, Line: 26
++	//		username := r.FormValue("username")
++	//		Variable 'username' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 27
++	//		password := r.FormValue("password")
++	//		Variable 'password' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 28
++	//		query := fmt.Sprintf("SELECT * FROM users WHERE username='%s' AND password='%s'", username, password)
++	//		Variable 'query' is assigned a tainted value.
++	//	File: src.go, Line: 31
++	//		db.Raw(query)
++	//		Tainted information is used in a sink.
+ 	db.Raw(query).Scan(&users)
+ 
+ 	// Print the results

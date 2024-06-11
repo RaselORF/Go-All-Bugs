@@ -1,0 +1,18 @@
+--- /workspace/source/ft/path/29-echo-static/src.go
++++ /workspace/source/ft/path/29-echo-static/src.go
+@@ -15,6 +15,15 @@
+ 	e := echo.New()
+ 
+ 	// Serve static files from the "public" directory at the "/static" URL path
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 14
++	//		prefix := r.URL.Query().Get("path")
++	//		Variable 'prefix' is assigned a tainted value.
++	//	File: src.go, Line: 18
++	//		e.Static(prefix, "/")
++	//		Tainted information is used in a sink.
+ 	e.Static(prefix, "/")
+ 	w.Write([]byte("Hello"))
+ }

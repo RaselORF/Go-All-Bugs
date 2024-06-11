@@ -1,0 +1,11 @@
+--- /workspace/source/cur/cur-2/04-recover-not-in-defer-Bug10/src.go
++++ /workspace/source/cur/cur-2/04-recover-not-in-defer-Bug10/src.go
+@@ -8,6 +8,8 @@
+ 
+ func fun() {
+ 	func() {
++		// OpenRefactory Warning:
++		// recover should be called directly by a deferred function.
+ 		if r := recover(); r != nil {
+ 			fmt.Println(r)
+ 		}

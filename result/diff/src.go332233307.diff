@@ -1,0 +1,29 @@
+--- /workspace/source/ft/os/33-taint-in-loop/src.go
++++ /workspace/source/ft/os/33-taint-in-loop/src.go
+@@ -28,5 +28,26 @@
+ 
+ func bar(cmdStr string) {
+ 	cmd := exec.Command(cmdStr)
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 14
++	//		vals := req.URL.Query()
++	//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 16
++	//		cmdName = vals.Get("cmd")
++	//		Variable 'cmdName' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 20
++	//		foo()
++	//		Tainted information is passed through the function call to the global 'cmdName'
++	//	File: src.go, Line: 26
++	//		bar(cmdName)
++	//		Tainted information is passed through the function call via 'cmdName' to the parameter 'cmdStr'
++	//	File: src.go, Line: 30
++	//		cmd := exec.Command(cmdStr)
++	//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 31
++	//		cmd.Run()
++	//		Tainted information is used in a sink.
+ 	cmd.Run()
+ }

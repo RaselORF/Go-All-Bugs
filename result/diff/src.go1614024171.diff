@@ -1,0 +1,15 @@
+--- /workspace/source/mhsc/mhsc-1/02-mhsc-missing-HttpOnly-flag-Bug-26/src.go
++++ /workspace/source/mhsc/mhsc-1/02-mhsc-missing-HttpOnly-flag-Bug-26/src.go
+@@ -7,8 +7,10 @@
+ 
+ func SetCookie(w http.ResponseWriter, name, value string) {
+ 	http.SetCookie(w, &http.Cookie{
+-		Name:  name,
+-		Value: value,
++		Name:     name,
++		Value:    value,
++		HttpOnly: true,
++		Secure:   true,
+ 	})
+ }
+ 

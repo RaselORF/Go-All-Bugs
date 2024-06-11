@@ -1,0 +1,21 @@
+--- /workspace/source/ft/ssrf/32-http-postform/src.go
++++ /workspace/source/ft/ssrf/32-http-postform/src.go
+@@ -18,6 +18,18 @@
+ 		"url": {"http://localhost:8080/secret"},
+ 	}
+ 
++	// OpenRefactory Warning:
++	// Possible Server-Side Request Forgery (SSRF)!
++	// Path:
++	//	File: src.go, Line: 15
++	//		target := req.FormValue("targetURL")
++	//		Variable 'target' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 16
++	//		postUrl := fmt.Sprintf("https://%s.example.com/data/", target)
++	//		Variable 'postUrl' is assigned a tainted value.
++	//	File: src.go, Line: 21
++	//		http.PostForm(postUrl, formData)
++	//		Tainted information is used in a sink.
+ 	resp, err := http.PostForm(postUrl, formData)
+ 	if err != nil {
+ 		fmt.Println("error:", err)

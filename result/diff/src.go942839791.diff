@@ -1,0 +1,11 @@
+--- /workspace/source/ft/sql/20-go-sql-driver-mysql-query/src.go
++++ /workspace/source/ft/sql/20-go-sql-driver-mysql-query/src.go
+@@ -27,5 +27,8 @@
+ 
+ func main() {
+ 	http.HandleFunc("/", handler)
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8090", nil)
+ }

@@ -1,0 +1,11 @@
+--- /workspace/source/ft/weak-hash/04-hash-fnv-sum32/src.go
++++ /workspace/source/ft/weak-hash/04-hash-fnv-sum32/src.go
+@@ -13,6 +13,8 @@
+ func main() {
+ 	secret := os.Getenv("SECRET")
+ 	h := fnv.New32()
++	// OpenRefactory Warning:
++	// Hash generated from weak hashing algorithm!
+ 	h.Write([]byte(secret))
+ 	hash := h.Sum32()
+ 	fmt.Printf("%x\n", hash)

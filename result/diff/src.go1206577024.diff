@@ -1,0 +1,18 @@
+--- /workspace/source/ft/zip/06-compress-flate-NewReaderDict/src.go
++++ /workspace/source/ft/zip/06-compress-flate-NewReaderDict/src.go
+@@ -16,6 +16,15 @@
+ 	defer file.Close()
+ 
+ 	dictionary := []byte("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
++	// OpenRefactory Warning:
++	// Possible Untrusted Deserializaiton!
++	// Path:
++	//	File: src.go, Line: 14
++	//		file, _, _ := r.FormFile("file.zip")
++	//		Variable 'file' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 19
++	//		flate.NewReaderDict(file, dictionary)
++	//		Tainted information is used in a sink.
+ 	reader := flate.NewReaderDict(file, dictionary)
+ 	fmt.Print(reader)
+ 	w.Write([]byte("Hello"))

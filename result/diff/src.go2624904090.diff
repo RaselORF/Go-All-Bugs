@@ -1,0 +1,24 @@
+--- /workspace/source/ft/ssrf/31-http-client-Head/src.go
++++ /workspace/source/ft/ssrf/31-http-client-Head/src.go
+@@ -18,6 +18,21 @@
+ 		fmt.Println(err)
+ 		return
+ 	}
++	// OpenRefactory Warning:
++	// Possible Cross-Site Scripting (XSS)!
++	// Path:
++	//	File: src.go, Line: 13
++	//		target := req.FormValue("targetURL")
++	//		Variable 'target' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 14
++	//		url := fmt.Sprintf("https://%s.example.com/data/", target)
++	//		Variable 'url' is assigned a tainted value.
++	//	File: src.go, Line: 16
++	//		resp, err := client.Head(url)
++	//		Variable 'resp' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 21
++	//		fmt.Fprint(w, resp)
++	//		Tainted information is used in a sink.
+ 	fmt.Fprint(w, resp)
+ }
+ 

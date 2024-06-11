@@ -1,0 +1,18 @@
+--- /workspace/source/ft/path/14-os-chown/src.go
++++ /workspace/source/ft/path/14-os-chown/src.go
+@@ -16,6 +16,15 @@
+ 	uid := 1001
+ 	gid := 1001
+ 	// Change the ownership of the file
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 14
++	//		path := r.URL.Query().Get("path")
++	//		Variable 'path' is assigned a tainted value.
++	//	File: src.go, Line: 19
++	//		os.Chown(path, uid, gid)
++	//		Tainted information is used in a sink.
+ 	err := os.Chown(path, uid, gid)
+ 	if err != nil {
+ 		fmt.Println("Error changing ownership:", err)

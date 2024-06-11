@@ -1,0 +1,11 @@
+--- /workspace/source/csa/11-csa-self-assign-switch-statement-Bug09/src.go
++++ /workspace/source/csa/11-csa-self-assign-switch-statement-Bug09/src.go
+@@ -4,6 +4,8 @@
+ package testdata
+ 
+ func isDivByThree(a int) bool {
++	// OpenRefactory Warning:
++	// Unnecessary self assignment to a
+ 	switch a = a; a % 3 {
+ 	case 0:
+ 		return true

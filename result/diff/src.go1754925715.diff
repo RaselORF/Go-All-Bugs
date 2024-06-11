@@ -1,0 +1,30 @@
+--- /workspace/source/ft/os/26-pass-taint-return-loc/src.go
++++ /workspace/source/ft/os/26-pass-taint-return-loc/src.go
+@@ -12,6 +12,27 @@
+ 
+ func HandleReq(req *http.Request) {
+ 	cmd := getCmdInfo(req.URL)
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 19
++	//		vals := url.Query()
++	//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 20
++	//		name := vals.Get("cmd")
++	//		Variable 'name' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 21
++	//		cmd := exec.Command(name)
++	//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 22
++	//		return cmd
++	//		A tainted value is returned from the function call.
++	//	File: src.go, Line: 14
++	//		cmd := getCmdInfo(req.URL)
++	//		Variable 'cmd' is assigned a tainted value.
++	//	File: src.go, Line: 15
++	//		cmd.Run()
++	//		Tainted information is used in a sink.
+ 	cmd.Run()
+ }
+ 

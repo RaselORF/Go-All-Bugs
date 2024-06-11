@@ -1,0 +1,18 @@
+--- /workspace/source/ft/hck/05-crypto-x509-ParsePKCS8PrivateKey/src.go
++++ /workspace/source/ft/hck/05-crypto-x509-ParsePKCS8PrivateKey/src.go
+@@ -17,6 +17,15 @@
+ -----END PRIVATE KEY-----`)
+ 
+ 	// Parse the private key
++	// OpenRefactory Warning:
++	// Possible Hard Coded Key!
++	// Path:
++	//	File: src.go, Line: 13
++	//		keyPEM := []byte(`-----BEGIN PRIVATE KEY-----
++	//		Variable 'keyPEM' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 20
++	//		x509.ParsePKCS8PrivateKey(keyPEM)
++	//		Tainted information is used in a sink.
+ 	key, err := x509.ParsePKCS8PrivateKey(keyPEM)
+ 	if err != nil {
+ 		log.Fatal("Error parsing private key:", err)

@@ -1,0 +1,38 @@
+--- /workspace/source/ft/os/38-taint-field-expansion/src.go
++++ /workspace/source/ft/os/38-taint-field-expansion/src.go
+@@ -40,5 +40,35 @@
+ 
+ func bar(loc Local) {
+ 	cmd := exec.Command(loc.con.msg.comm)
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 29
++	//		vals := req.URL.Query()
++	//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 30
++	//		cmdName := vals.Get("cmd")
++	//		Variable 'cmdName' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 31
++	//		m := Msg{cmdName, 0}
++	//		Variable 'm' is assigned a tainted value from the initialization of Field 'comm' (from type Msg).
++	//	File: src.go, Line: 32
++	//		c := Conv{m, true}
++	//		Variable 'c' is assigned a tainted value from the initialization of Field 'msg' (from type Conv).
++	//	File: src.go, Line: 33
++	//		l := Local{c, "check"}
++	//		Variable 'l' is assigned a tainted value from the initialization of Field 'con' (from type Local).
++	//	File: src.go, Line: 34
++	//		foo(l)
++	//		Tainted information is passed through the function call via 'l' to the parameter 'loc' through the field 'comm' (from type Msg)
++	//	File: src.go, Line: 38
++	//		bar(loc)
++	//		Tainted information is passed through the function call via 'loc' to the parameter 'loc' through the field 'comm' (from type Msg)
++	//	File: src.go, Line: 42
++	//		cmd := exec.Command(loc.con.msg.comm)
++	//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 43
++	//		cmd.Run()
++	//		Tainted information is used in a sink.
+ 	cmd.Run()
+ }

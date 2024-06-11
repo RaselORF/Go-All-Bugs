@@ -1,0 +1,18 @@
+--- /workspace/source/ft/xpath/06-goxpath-parseexec/src.go
++++ /workspace/source/ft/xpath/06-goxpath-parseexec/src.go
+@@ -18,6 +18,15 @@
+ 	r.ParseForm()
+ 	username := r.Form.Get("username")
+ 
++	// OpenRefactory Warning:
++	// Possible Xpath Injection!
++	// Path:
++	//	File: src.go, Line: 19
++	//		username := r.Form.Get("username")
++	//		Variable 'username' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 21
++	//		goxpath.ParseExec("//users/user[login/text()='"+username+"']/home_dir/text()", doc)
++	//		Tainted information is used in a sink.
+ 	unsafeRes, _ := goxpath.ParseExec("//users/user[login/text()='"+username+"']/home_dir/text()", doc)
+ 	fmt.Println(unsafeRes)
+ }

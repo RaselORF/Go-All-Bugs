@@ -1,0 +1,10 @@
+--- /workspace/source/ft/session/03-http-setcookie/src.go
++++ /workspace/source/ft/session/03-http-setcookie/src.go
+@@ -18,6 +18,7 @@
+ 			HttpOnly: true,
+ 			Expires:  time.Now().Add(time.Hour * 1),
+ 			Path:     "/",
++			Secure:   true,
+ 		}
+ 		http.SetCookie(w, sessionID)
+ 		// Serve the response

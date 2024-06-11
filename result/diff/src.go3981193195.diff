@@ -1,0 +1,12 @@
+--- /workspace/source/cic/cic-1/02-cic-cors-set-Bug25/src.go
++++ /workspace/source/cic/cic-1/02-cic-cors-set-Bug25/src.go
+@@ -15,6 +15,9 @@
+ 		w.Header().Set("Access-Control-Allow-Origin", starVal)
+ 		w.Write([]byte("{\"hello\": \"world\"}"))
+ 	})
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8080", mux)
+ }
+ 

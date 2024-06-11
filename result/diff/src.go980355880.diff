@@ -1,0 +1,18 @@
+--- /workspace/source/ft/session/02-htpt-header-add/src.go
++++ /workspace/source/ft/session/02-htpt-header-add/src.go
+@@ -11,6 +11,15 @@
+ func main() {
+ 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+ 		sessionID := r.URL.Query().Get("session_id")
++		// OpenRefactory Warning:
++		// Possible Session Fixation!
++		// Path:
++		//	File: src.go, Line: 13
++		//		sessionID := r.URL.Query().Get("session_id")
++		//		Variable 'sessionID' is assigned a tainted value.
++		//	File: src.go, Line: 14
++		//		w.Header().Add("Set-Cookie", "session_id="+sessionID)
++		//		Tainted information is used in a sink.
+ 		w.Header().Add("Set-Cookie", "session_id="+sessionID)
+ 		w.Write([]byte("Hello, World!"))
+ 	})

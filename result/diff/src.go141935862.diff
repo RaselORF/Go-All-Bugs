@@ -1,0 +1,12 @@
+--- /workspace/source/cmc/cmc-2/05-cmc-uint64-GTR-Bug06/src.go
++++ /workspace/source/cmc/cmc-2/05-cmc-uint64-GTR-Bug06/src.go
+@@ -9,6 +9,9 @@
+ )
+ 
+ func check(a uint64) {
++	// OpenRefactory Warning:
++	// Unsigned integer comparison should be meaningful.
++	// The expression '0 > a' will always evaluate to false.
+ 	if 0 > a {
+ 		fmt.Println("value is negative")
+ 	}

@@ -1,0 +1,12 @@
+--- /workspace/source/clsc/05-clsc-Bug04/src.go
++++ /workspace/source/clsc/05-clsc-Bug04/src.go
+@@ -5,6 +5,9 @@
+ package testdata
+ 
+ func compare(s1, s2 []int) bool {
++	// OpenRefactory Warning:
++	// The following expression 'len(s1) + cap(s1) < len(s1) + cap(s1)'
++	// has identical operands on both sides.
+ 	if len(s1)+cap(s1) < len(s1)+cap(s1) {
+ 		return true
+ 	}

@@ -1,0 +1,11 @@
+--- /workspace/source/ft/log/109-logrus-Infoln/src.go
++++ /workspace/source/ft/log/109-logrus-Infoln/src.go
+@@ -47,5 +47,8 @@
+ 
+ func main() {
+ 	http.HandleFunc("/", handler)
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8090", nil)
+ }

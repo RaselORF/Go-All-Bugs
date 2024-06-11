@@ -1,0 +1,16 @@
+--- /workspace/source/mhsc/mhsc-2/02-mhsc-HttpOnly-flag-missing-Bug-26/src.go
++++ /workspace/source/mhsc/mhsc-2/02-mhsc-HttpOnly-flag-missing-Bug-26/src.go
+@@ -15,9 +15,10 @@
+ func MyHandler(w http.ResponseWriter, r *http.Request) {
+ 	session, _ := store.Get(r, "session-name")
+ 	session.Options = &sessions.Options{
+-		Path:   "/",
+-		MaxAge: 3600,
+-		Secure: true,
++		Path:     "/",
++		MaxAge:   3600,
++		Secure:   true,
++		HttpOnly: true,
+ 	}
+ 	err := session.Save(r, w)
+ 	if err != nil {

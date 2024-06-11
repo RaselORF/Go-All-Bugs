@@ -1,0 +1,18 @@
+--- /workspace/source/ft/session/04-gin-context-setcookie/src.go
++++ /workspace/source/ft/session/04-gin-context-setcookie/src.go
+@@ -14,6 +14,15 @@
+ 	r.GET("/", func(c *gin.Context) {
+ 		sessionID := c.Query("session_id")
+ 		if sessionID != "" {
++			// OpenRefactory Warning:
++			// Possible Session Fixation!
++			// Path:
++			//	File: src.go, Line: 15
++			//		sessionID := c.Query("session_id")
++			//		Variable 'sessionID' is assigned a tainted value from an external source.
++			//	File: src.go, Line: 17
++			//		c.SetCookie("session_id", sessionID, 3600, "/", "", false, true)
++			//		Tainted information is used in a sink.
+ 			c.SetCookie("session_id", sessionID, 3600, "/", "", false, true)
+ 		} else {
+ 			// Session ID has not been set, so generate a new one

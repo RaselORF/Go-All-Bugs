@@ -1,0 +1,10 @@
+--- /workspace/source/ft/rrg/07-crypto-cipher-math-rand/src.go
++++ /workspace/source/ft/rrg/07-crypto-cipher-math-rand/src.go
+@@ -23,5 +23,7 @@
+ 	rand.Read(nonce)
+ 
+ 	aesgcm, _ := cipher.NewGCM(block)
++	// OpenRefactory Warning:
++	// Sensitive usage of pseudo random number!
+ 	return aesgcm.Seal(nil, nonce, text, nil)
+ }

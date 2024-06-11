@@ -1,0 +1,18 @@
+--- /workspace/source/ft/path/05-ioutil-tempdir/src.go
++++ /workspace/source/ft/path/05-ioutil-tempdir/src.go
+@@ -13,6 +13,15 @@
+ 
+ func handler(w http.ResponseWriter, r *http.Request) {
+ 	path := r.URL.Query().Get("path")
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 15
++	//		path := r.URL.Query().Get("path")
++	//		Variable 'path' is assigned a tainted value.
++	//	File: src.go, Line: 16
++	//		ioutil.TempDir(path, "example")
++	//		Tainted information is used in a sink.
+ 	dir, err := ioutil.TempDir(path, "example")
+ 	if err != nil {
+ 		fmt.Println("Error creating temporary directory:", err)

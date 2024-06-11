@@ -1,0 +1,11 @@
+--- /workspace/source/ft/weak-hash/11-hash-fnv-sum/src.go
++++ /workspace/source/ft/weak-hash/11-hash-fnv-sum/src.go
+@@ -13,6 +13,8 @@
+ func main() {
+ 	pwd := []byte(getPass())
+ 	h := fnv.New128()
++	// OpenRefactory Warning:
++	// Hash generated from weak hashing algorithm!
+ 	hash := h.Sum(pwd)
+ 	fmt.Printf("%x\n", hash)
+ }

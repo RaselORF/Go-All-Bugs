@@ -1,0 +1,12 @@
+--- /workspace/source/clsc/02-clsc-Bug04/src.go
++++ /workspace/source/clsc/02-clsc-Bug04/src.go
+@@ -10,6 +10,9 @@
+ 
+ func comparePoint(p1, p2 Point) bool {
+ 	if p1.x != 0 && p1.y != 0 {
++		// OpenRefactory Warning:
++		// The following expression 'p1.y < p1.y'
++		// has identical operands on both sides.
+ 		return p1.x < p2.x && p1.y < p1.y
+ 	}
+ 	return false

@@ -1,0 +1,12 @@
+--- /workspace/source/cmc/cmc-1/07-cmc-cap-GEQ-Bug06/src.go
++++ /workspace/source/cmc/cmc-1/07-cmc-cap-GEQ-Bug06/src.go
+@@ -5,6 +5,9 @@
+ package testdata
+ 
+ func check(c chan int) bool {
++	// OpenRefactory Warning:
++	// len or cap comparison should be meaningful.
++	// The expression 'cap(c) >= 0' will always evaluate to true.
+ 	return cap(c) >= 0
+ }
+ 

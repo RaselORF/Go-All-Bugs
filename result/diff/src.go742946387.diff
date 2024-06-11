@@ -1,0 +1,18 @@
+--- /workspace/source/ft/zip/10-compress-gzip-NewReader/src.go
++++ /workspace/source/ft/zip/10-compress-gzip-NewReader/src.go
+@@ -15,6 +15,15 @@
+ 
+ 	defer file.Close()
+ 
++	// OpenRefactory Warning:
++	// Possible Untrusted Deserializaiton!
++	// Path:
++	//	File: src.go, Line: 14
++	//		file, _, _ := r.FormFile("file.zip")
++	//		Variable 'file' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 18
++	//		gzip.NewReader(file)
++	//		Tainted information is used in a sink.
+ 	reader, _ := gzip.NewReader(file)
+ 	fmt.Print(reader)
+ 	w.Write([]byte("Hello"))

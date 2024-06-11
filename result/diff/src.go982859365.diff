@@ -1,0 +1,21 @@
+--- /workspace/source/ft/ssrf/17-fasthttp-requestheader-setrequesturi-wrong/src.go
++++ /workspace/source/ft/ssrf/17-fasthttp-requestheader-setrequesturi-wrong/src.go
+@@ -21,6 +21,18 @@
+ 	// Send HTTP request
+ 	resp := fasthttp.AcquireResponse()
+ 	defer fasthttp.ReleaseResponse(resp)
++	// OpenRefactory Warning:
++	// Possible Server-Side Request Forgery (SSRF)!
++	// Path:
++	//	File: src.go, Line: 15
++	//		urlParam := r.URL.Query().Get("url")
++	//		Variable 'urlParam' is assigned a tainted value.
++	//	File: src.go, Line: 18
++	//		req.SetRequestURI(urlParam)
++	//		Tainted information passed through a function call.
++	//	File: src.go, Line: 24
++	//		fasthttp.Do(req, resp)
++	//		Tainted information is used in a sink.
+ 	if err := fasthttp.Do(req, resp); err != nil {
+ 		fmt.Printf("Error: %s\n", err)
+ 		return

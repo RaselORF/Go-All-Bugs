@@ -1,0 +1,11 @@
+--- /workspace/source/csa/09-csa-self-assign-if-statement-Bug09/src.go
++++ /workspace/source/csa/09-csa-self-assign-if-statement-Bug09/src.go
+@@ -12,6 +12,8 @@
+ 		fmt.Println("Not divided by 3")
+ 	} else if a = a; a%3 == 2 {
+ 
++		// OpenRefactory Warning:
++		// Unnecessary self assignment to a
+ 	}
+ }
+ 

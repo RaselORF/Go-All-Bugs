@@ -1,0 +1,24 @@
+--- /workspace/source/ft/ssrf/33-http-client-postform/src.go
++++ /workspace/source/ft/ssrf/33-http-client-postform/src.go
+@@ -24,6 +24,21 @@
+ 		fmt.Println(err)
+ 		return
+ 	}
++	// OpenRefactory Warning:
++	// Possible Cross-Site Scripting (XSS)!
++	// Path:
++	//	File: src.go, Line: 14
++	//		target := req.FormValue("targetURL")
++	//		Variable 'target' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 15
++	//		postUrl := fmt.Sprintf("https://%s.example.com/data/", target)
++	//		Variable 'postUrl' is assigned a tainted value.
++	//	File: src.go, Line: 22
++	//		resp, err := client.PostForm(postUrl, data)
++	//		Variable 'resp' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 27
++	//		fmt.Fprint(w, resp)
++	//		Tainted information is used in a sink.
+ 	fmt.Fprint(w, resp)
+ }
+ 

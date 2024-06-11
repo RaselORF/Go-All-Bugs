@@ -1,0 +1,11 @@
+--- /workspace/source/ft/log/113-logger-println/src.go
++++ /workspace/source/ft/log/113-logger-println/src.go
+@@ -32,5 +32,8 @@
+ 
+ func main() {
+ 	http.HandleFunc("/", handler)
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8090", nil)
+ }

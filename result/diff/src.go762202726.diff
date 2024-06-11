@@ -1,0 +1,11 @@
+--- /workspace/source/ft/session/06-http-header-set-2/src.go
++++ /workspace/source/ft/session/06-http-header-set-2/src.go
+@@ -19,5 +19,8 @@
+ 		}
+ 		w.Write([]byte("Hello, World!"))
+ 	})
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8080", nil)
+ }

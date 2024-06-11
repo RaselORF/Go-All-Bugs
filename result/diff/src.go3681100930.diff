@@ -1,0 +1,26 @@
+--- /workspace/source/ft/xss/13-gin-context-string/src.go
++++ /workspace/source/ft/xss/13-gin-context-string/src.go
+@@ -6,6 +6,7 @@
+ 
+ import (
+ 	"github.com/gin-gonic/gin"
++	"github.com/microcosm-cc/bluemonday"
+ )
+ 
+ func main() {
+@@ -13,7 +14,14 @@
+ 
+ 	// Define a route that returns a JSON response with indentation
+ 	router.GET("/example", func(c *gin.Context) {
+-		c.String(200, c.Param("url"))
++		// OpenRefactory Warning:
++		// Possible Cross-Site Scripting (XSS)!
++		// Path:
++		//	File: src.go, Line: 16
++		//		c.String(200, c.Param("url"))
++		//		Tainted information is used in a sink.
++		// Fix: iCR sanitizes the tainted input.
++		c.String(200, bluemonday.UGCPolicy().Sanitize(c.Param("url")))
+ 	})
+ 
+ 	// Start the server

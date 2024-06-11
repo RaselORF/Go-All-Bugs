@@ -1,0 +1,11 @@
+--- /workspace/source/ft/rrg/02-crypto-sha256-math-rand/src.go
++++ /workspace/source/ft/rrg/02-crypto-sha256-math-rand/src.go
+@@ -24,6 +24,8 @@
+ 	hash.Write(val)
+ 	saltBytes := []byte(salt)
+ 	hash.Write(saltBytes)
++	// OpenRefactory Warning:
++	// Sensitive usage of pseudo random number!
+ 	hashedBytes := hash.Sum(nil)
+ 	return hashedBytes
+ }

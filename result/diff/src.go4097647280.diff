@@ -1,0 +1,24 @@
+--- /workspace/source/ft/sql/07-jmoiron-modl-dbmap-exec/src.go
++++ /workspace/source/ft/sql/07-jmoiron-modl-dbmap-exec/src.go
+@@ -24,6 +24,21 @@
+ 	password := r.FormValue("password")
+ 	query := fmt.Sprintf("SELECT * FROM users WHERE username='%s' AND password='%s'", username, password)
+ 
++	// OpenRefactory Warning:
++	// Possible SQL Injection!
++	// Path:
++	//	File: src.go, Line: 23
++	//		username := r.FormValue("username")
++	//		Variable 'username' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 24
++	//		password := r.FormValue("password")
++	//		Variable 'password' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 25
++	//		query := fmt.Sprintf("SELECT * FROM users WHERE username='%s' AND password='%s'", username, password)
++	//		Variable 'query' is assigned a tainted value.
++	//	File: src.go, Line: 27
++	//		conn.Exec(query)
++	//		Tainted information is used in a sink.
+ 	conn.Exec(query)
+ }
+ 

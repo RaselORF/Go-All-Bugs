@@ -1,0 +1,30 @@
+--- /workspace/source/ft/os/83-pass-taint-to-caller-param-slice-field/src.go
++++ /workspace/source/ft/os/83-pass-taint-to-caller-param-slice-field/src.go
+@@ -30,6 +30,27 @@
+ func bar(bxSl []Box) {
+ 	for _, bx := range bxSl {
+ 		cmd := exec.Command(bx.data)
++		// OpenRefactory Warning:
++		// Possible OS Command Injection!
++		// Path:
++		//	File: src.go, Line: 26
++		//		vals := req.URL.Query()
++		//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 27
++		//		boxList[0].data = vals.Get("cmd")
++		//		Variable 'boxList[0].data' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 22
++		//		bar(bs)
++		//		Tainted information is passed through the function call via 'bs' to the parameter 'bxSl' through the field 'data' (from type Box)
++		//	File: src.go, Line: 31
++		//		for _, bx := range bxSl {
++		//		Variable 'bx' is assigned a tainted value.
++		//	File: src.go, Line: 32
++		//		cmd := exec.Command(bx.data)
++		//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 33
++		//		cmd.Run()
++		//		Tainted information is used in a sink.
+ 		cmd.Run()
+ 	}
+ }

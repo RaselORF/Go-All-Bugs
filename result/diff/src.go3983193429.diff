@@ -1,0 +1,11 @@
+--- /workspace/source/csa/01-csa-single-exp-self-assignment-Bug05/src.go
++++ /workspace/source/csa/01-csa-single-exp-self-assignment-Bug05/src.go
+@@ -8,6 +8,8 @@
+ }
+ 
+ func (user *User) setName(name string) {
++	// OpenRefactory Warning:
++	// Unnecessary self assignment to name
+ 	name = name
+ }
+ 

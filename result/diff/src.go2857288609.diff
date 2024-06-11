@@ -1,0 +1,27 @@
+--- /workspace/source/ft/sql/27-database-sql-db-queryRow-FLAKY/src.go
++++ /workspace/source/ft/sql/27-database-sql-db-queryRow-FLAKY/src.go
+@@ -37,6 +37,24 @@
+ 	db, _ := sql.Open("postgres", connStr)
+ 	defer db.Close()
+ 	query := fmt.Sprintf("SELECT * FROM users WHERE username=%s AND password=%s", school.user.username, school.user.password)
++	// OpenRefactory Warning:
++	// Possible SQL Injection!
++	// Path:
++	//	File: src.go, Line: 45
++	//		password := req.URL.Query().Get("password")
++	//		Variable 'password' is assigned a tainted value.
++	//	File: src.go, Line: 46
++	//		school := newSchool(newUser(username, password))
++	//		Variable 'school' is assigned a tainted value.
++	//	File: src.go, Line: 48
++	//		Query(school)
++	//		Tainted information is passed through the function call via 'school' to the parameter 'school' through the field 'password' (from type User)
++	//	File: src.go, Line: 39
++	//		query := fmt.Sprintf("SELECT * FROM users WHERE username=%s AND password=%s", school.user.username, school.user.password)
++	//		Variable 'query' is assigned a tainted value.
++	//	File: src.go, Line: 40
++	//		db.QueryRow(query)
++	//		Tainted information is used in a sink.
+ 	db.QueryRow(query)
+ }
+ 

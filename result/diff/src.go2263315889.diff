@@ -1,0 +1,11 @@
+--- /workspace/source/ft/session/03-http-setcookie/src.go
++++ /workspace/source/ft/session/03-http-setcookie/src.go
+@@ -23,5 +23,8 @@
+ 		// Serve the response
+ 		w.Write([]byte("Hello, World!"))
+ 	})
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8080", nil)
+ }

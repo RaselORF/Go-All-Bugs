@@ -1,0 +1,12 @@
+--- /workspace/source/cmc/cmc-2/08-cmc-uint8-LEQ-Bug06/src.go
++++ /workspace/source/cmc/cmc-2/08-cmc-uint8-LEQ-Bug06/src.go
+@@ -9,6 +9,9 @@
+ )
+ 
+ func check(a *uint8) {
++	// OpenRefactory Warning:
++	// Unsigned integer comparison should be meaningful.
++	// The expression '0 <= *a' will always evaluate to true.
+ 	if 0 <= *a {
+ 		fmt.Println("value is non-negative")
+ 	}

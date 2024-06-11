@@ -1,0 +1,32 @@
+--- /workspace/source/ft/os/32-taint-in-switch/src.go
++++ /workspace/source/ft/os/32-taint-in-switch/src.go
+@@ -31,5 +31,29 @@
+ 		cmdStr = "exit"
+ 	}
+ 	cmd := exec.Command(cmdStr)
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 14
++	//		vals := req.URL.Query()
++	//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 15
++	//		cmdName = vals.Get("cmd")
++	//		Variable 'cmdName' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 16
++	//		foo()
++	//		Tainted information is passed through the function call to the global 'cmdName'
++	//	File: src.go, Line: 20
++	//		bar(cmdName, "pwd", 1)
++	//		Tainted information is passed through the function call via 'cmdName' to the parameter 'c1'
++	//	File: src.go, Line: 27
++	//		cmdStr = c1
++	//		Variable 'cmdStr' is assigned a tainted value.
++	//	File: src.go, Line: 33
++	//		cmd := exec.Command(cmdStr)
++	//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 34
++	//		cmd.Run()
++	//		Tainted information is used in a sink.
+ 	cmd.Run()
+ }

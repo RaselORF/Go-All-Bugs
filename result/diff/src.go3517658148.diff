@@ -1,0 +1,21 @@
+--- /workspace/source/ft/path/02-ioutil-writefile-complex/src.go
++++ /workspace/source/ft/path/02-ioutil-writefile-complex/src.go
+@@ -16,6 +16,18 @@
+ func handler(w http.ResponseWriter, r *http.Request) {
+ 	path := getFilePath(r)
+ 	data := []byte("Hello, world!")
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 14
++	//		return req.URL.Query().Get("path")
++	//		A tainted value is returned from the function call.
++	//	File: src.go, Line: 17
++	//		path := getFilePath(r)
++	//		Variable 'path' is assigned a tainted value.
++	//	File: src.go, Line: 19
++	//		ioutil.WriteFile(path, data, 0644)
++	//		Tainted information is used in a sink.
+ 	err := ioutil.WriteFile(path, data, 0644)
+ 	if err != nil {
+ 		fmt.Println("Error writing file:", err)

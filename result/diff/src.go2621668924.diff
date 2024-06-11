@@ -1,0 +1,18 @@
+--- /workspace/source/ft/ssrf/09-resty-get/src.go
++++ /workspace/source/ft/ssrf/09-resty-get/src.go
+@@ -14,6 +14,15 @@
+ func handler(w http.ResponseWriter, r *http.Request) {
+ 	urlParam := r.URL.Query().Get("url")
+ 	restyClient := resty.New()
++	// OpenRefactory Warning:
++	// Possible Server-Side Request Forgery (SSRF)!
++	// Path:
++	//	File: src.go, Line: 15
++	//		urlParam := r.URL.Query().Get("url")
++	//		Variable 'urlParam' is assigned a tainted value.
++	//	File: src.go, Line: 17
++	//		restyClient.R().Get(urlParam)
++	//		Tainted information is used in a sink.
+ 	response, err := restyClient.R().Get(urlParam)
+ 	if err != nil {
+ 		fmt.Println("Error making request:", err)

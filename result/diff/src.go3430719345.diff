@@ -1,0 +1,11 @@
+--- /workspace/source/ft/rrg/10-crypto-sha256-sum224-math-rand/src.go
++++ /workspace/source/ft/rrg/10-crypto-sha256-sum224-math-rand/src.go
+@@ -20,6 +20,8 @@
+ 	// Append the salt to the data
+ 	data = append(data, salt...)
+ 	// Compute the SHA-224 hash of the salted data
++	// OpenRefactory Warning:
++	// Sensitive usage of pseudo random number!
+ 	hash := sha256.Sum224(data)
+ 	fmt.Printf("Salt: %x\n", salt)
+ 	fmt.Printf("Hashed Result: %x\n", hash)

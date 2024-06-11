@@ -1,0 +1,12 @@
+--- /workspace/source/cmc/cmc-1/04-cmc-len-GTR-Bug06/src.go
++++ /workspace/source/cmc/cmc-1/04-cmc-len-GTR-Bug06/src.go
+@@ -9,6 +9,9 @@
+ )
+ 
+ func check(s []string) {
++	// OpenRefactory Warning:
++	// len or cap comparison should be meaningful.
++	// The expression '0 > len(s)' will always evaluate to false.
+ 	if 0 > len(s) {
+ 		fmt.Println("Length is negative")
+ 	}

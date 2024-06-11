@@ -1,0 +1,27 @@
+--- /workspace/source/ft/xss/24-fiber-context-v2-send/src.go
++++ /workspace/source/ft/xss/24-fiber-context-v2-send/src.go
+@@ -6,6 +6,7 @@
+ 
+ import (
+ 	"github.com/gofiber/fiber/v2"
++	"github.com/microcosm-cc/bluemonday"
+ )
+ 
+ func main() {
+@@ -18,5 +19,15 @@
+ 
+ func handler(ctx *fiber.Ctx) error {
+ 	name := ctx.Query("name")
+-	return ctx.Send([]byte(name))
++	// OpenRefactory Warning:
++	// Possible Cross-Site Scripting (XSS)!
++	// Path:
++	//	File: src.go, Line: 20
++	//		name := ctx.Query("name")
++	//		Variable 'name' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 21
++	//		ctx.Send([]byte(name))
++	//		Tainted information is passed through a function call and is used in a sink.
++	// Fix: iCR sanitizes the tainted input.
++	return ctx.Send(bluemonday.UGCPolicy().SanitizeBytes([]byte(name)))
+ }

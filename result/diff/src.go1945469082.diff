@@ -1,0 +1,18 @@
+--- /workspace/source/ft/path/15-os-remove/src.go
++++ /workspace/source/ft/path/15-os-remove/src.go
+@@ -13,6 +13,15 @@
+ func handler(w http.ResponseWriter, r *http.Request) {
+ 	path := r.URL.Query().Get("path")
+ 	// Remove the file
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 14
++	//		path := r.URL.Query().Get("path")
++	//		Variable 'path' is assigned a tainted value.
++	//	File: src.go, Line: 16
++	//		os.Remove(path)
++	//		Tainted information is used in a sink.
+ 	err := os.Remove(path)
+ 	if err != nil {
+ 		fmt.Println("Error deleting file:", err)

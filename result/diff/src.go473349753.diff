@@ -1,0 +1,18 @@
+--- /workspace/source/ft/desrl/03-encoding-xml-decoder-decode/src.go
++++ /workspace/source/ft/desrl/03-encoding-xml-decoder-decode/src.go
+@@ -19,6 +19,15 @@
+ 
+ func handler(w http.ResponseWriter, r *http.Request) {
+ 	fileName := r.URL.Query().Get("file")
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 21
++	//		fileName := r.URL.Query().Get("file")
++	//		Variable 'fileName' is assigned a tainted value.
++	//	File: src.go, Line: 22
++	//		os.Open(fileName)
++	//		Tainted information is used in a sink.
+ 	file, err := os.Open(fileName)
+ 	if err != nil {
+ 		fmt.Println("Error opening directory:", err)

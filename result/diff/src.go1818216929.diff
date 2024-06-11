@@ -1,0 +1,12 @@
+--- /workspace/source/cic/cic-1/03-cic-cors-add-Bug25/src.go
++++ /workspace/source/cic/cic-1/03-cic-cors-add-Bug25/src.go
+@@ -18,6 +18,9 @@
+ 		w.Header().Add(accessControlHeader, starVal)
+ 		w.Write([]byte("{\"hello\": \"world\"}"))
+ 	})
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8080", mux)
+ }
+ 

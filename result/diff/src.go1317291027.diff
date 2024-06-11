@@ -1,0 +1,27 @@
+--- /workspace/source/ft/xss/03-fmt-fprintf/src.go
++++ /workspace/source/ft/xss/03-fmt-fprintf/src.go
+@@ -6,12 +6,23 @@
+ 
+ import (
+ 	"fmt"
++	"github.com/microcosm-cc/bluemonday"
+ 	"net/http"
+ )
+ 
+ func handle(w http.ResponseWriter, r *http.Request) {
+ 	param := r.URL.Query().Get("param")
+-	fmt.Fprintf(w, "<div>%s</div>", param)
++	// OpenRefactory Warning:
++	// Possible Cross-Site Scripting (XSS)!
++	// Path:
++	//	File: src.go, Line: 13
++	//		param := r.URL.Query().Get("param")
++	//		Variable 'param' is assigned a tainted value.
++	//	File: src.go, Line: 14
++	//		fmt.Fprintf(w, "<div>%s</div>", param)
++	//		Tainted information is used in a sink.
++	// Fix: iCR sanitizes the tainted input.
++	fmt.Fprintf(w, "<div>%s</div>", bluemonday.UGCPolicy().Sanitize(param))
+ }
+ 
+ func main() {

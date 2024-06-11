@@ -1,0 +1,17 @@
+--- /workspace/source/ft/ste/02-runtime-debug-stack/src.go
++++ /workspace/source/ft/ste/02-runtime-debug-stack/src.go
+@@ -11,5 +11,14 @@
+ 
+ func handlePanic(w http.ResponseWriter, r *http.Request) {
+ 	buf := debug.Stack()
++	// OpenRefactory Warning:
++	// Possible Stack Trace Exposure!
++	// Path:
++	//	File: src.go, Line: 13
++	//		buf := debug.Stack()
++	//		Variable 'buf' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 14
++	//		w.Write(buf)
++	//		Tainted information is used in a sink.
+ 	w.Write(buf)
+ }

@@ -1,0 +1,24 @@
+--- /workspace/source/ft/sql/05-gosqljson-query-to-struc/src.go
++++ /workspace/source/ft/sql/05-gosqljson-query-to-struc/src.go
+@@ -29,6 +29,21 @@
+ 	query := fmt.Sprintf("SELECT * FROM users WHERE username='%s' AND password='%s'", username, password)
+ 
+ 	resultStructs := []User{}
++	// OpenRefactory Warning:
++	// Possible SQL Injection!
++	// Path:
++	//	File: src.go, Line: 27
++	//		username := r.FormValue("username")
++	//		Variable 'username' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 28
++	//		password := r.FormValue("password")
++	//		Variable 'password' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 29
++	//		query := fmt.Sprintf("SELECT * FROM users WHERE username='%s' AND password='%s'", username, password)
++	//		Variable 'query' is assigned a tainted value.
++	//	File: src.go, Line: 32
++	//		gosqljson.QueryToStructs(db, &resultStructs, query)
++	//		Tainted information is used in a sink.
+ 	gosqljson.QueryToStructs(db, &resultStructs, query)
+ }
+ 

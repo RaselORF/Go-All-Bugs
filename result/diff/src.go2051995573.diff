@@ -1,0 +1,27 @@
+--- /workspace/source/ft/sql/28-sqlite-queryContext-FLAKY/src.go
++++ /workspace/source/ft/sql/28-sqlite-queryContext-FLAKY/src.go
+@@ -47,6 +47,24 @@
+ 	params := []driver.NamedValue{}
+ 	query := fmt.Sprintf("SELECT * FROM users WHERE username=%s AND password=%s", school.user.username, school.user.password)
+ 	// Execute the query and process the results
++	// OpenRefactory Warning:
++	// Possible SQL Injection!
++	// Path:
++	//	File: src.go, Line: 66
++	//		username := req.URL.Query().Get("username")
++	//		Variable 'username' is assigned a tainted value.
++	//	File: src.go, Line: 68
++	//		school := newSchool(newUser(username, password))
++	//		Variable 'school' is assigned a tainted value.
++	//	File: src.go, Line: 70
++	//		Query(school)
++	//		Tainted information is passed through the function call via 'school' to the parameter 'school' through the field 'username' (from type User)
++	//	File: src.go, Line: 48
++	//		query := fmt.Sprintf("SELECT * FROM users WHERE username=%s AND password=%s", school.user.username, school.user.password)
++	//		Variable 'query' is assigned a tainted value.
++	//	File: src.go, Line: 50
++	//		db.QueryContext(ctx, query, params)
++	//		Tainted information is used in a sink.
+ 	rows, err := db.QueryContext(ctx, query, params)
+ 	if err != nil {
+ 		panic(err)

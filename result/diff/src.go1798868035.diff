@@ -1,0 +1,24 @@
+--- /workspace/source/ft/sql/01-database-sql-db-query/src.go
++++ /workspace/source/ft/sql/01-database-sql-db-query/src.go
+@@ -19,6 +19,21 @@
+ 	username := r.FormValue("username")
+ 	password := r.FormValue("password")
+ 	query := fmt.Sprintf("SELECT * FROM users WHERE username=%s AND password=%s", username, password)
++	// OpenRefactory Warning:
++	// Possible SQL Injection!
++	// Path:
++	//	File: src.go, Line: 19
++	//		username := r.FormValue("username")
++	//		Variable 'username' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 20
++	//		password := r.FormValue("password")
++	//		Variable 'password' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 21
++	//		query := fmt.Sprintf("SELECT * FROM users WHERE username=%s AND password=%s", username, password)
++	//		Variable 'query' is assigned a tainted value.
++	//	File: src.go, Line: 22
++	//		db.Query(query)
++	//		Tainted information is used in a sink.
+ 	db.Query(query)
+ }
+ 

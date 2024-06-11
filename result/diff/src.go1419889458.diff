@@ -1,0 +1,33 @@
+--- /workspace/source/ft/os/63-map-key-taint-range-exp/src.go
++++ /workspace/source/ft/os/63-map-key-taint-range-exp/src.go
+@@ -24,6 +24,30 @@
+ func foo() {
+ 	for key := range gb.data {
+ 		cmd := exec.Command(key)
++		// OpenRefactory Warning:
++		// Possible OS Command Injection!
++		// Path:
++		//	File: src.go, Line: 18
++		//		vals := req.URL.Query()
++		//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 19
++		//		cmdName := vals.Get("cmd")
++		//		Variable 'cmdName' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 20
++		//		gb.data[cmdName]
++		//		Map key 'cmdName' is assigned a tainted value.
++		//	File: src.go, Line: 21
++		//		foo()
++		//		Tainted information is passed through the function call to the global 'gb' through the 'key' of the map
++		//	File: src.go, Line: 25
++		//		for key := range gb.data {
++		//		Variable 'key' is assigned a tainted value.
++		//	File: src.go, Line: 26
++		//		cmd := exec.Command(key)
++		//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 27
++		//		cmd.Run()
++		//		Tainted information is used in a sink.
+ 		cmd.Run()
+ 	}
+ }

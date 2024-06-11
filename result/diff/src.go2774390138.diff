@@ -1,0 +1,18 @@
+--- /workspace/source/ft/path/21-path-filepath-walk/src.go
++++ /workspace/source/ft/path/21-path-filepath-walk/src.go
+@@ -14,6 +14,15 @@
+ func handler(w http.ResponseWriter, r *http.Request) {
+ 	filePath := r.URL.Query().Get("path")
+ 	// Walk the directory tree and print each file path
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 15
++	//		filePath := r.URL.Query().Get("path")
++	//		Variable 'filePath' is assigned a tainted value.
++	//	File: src.go, Line: 17
++	//		filepath.Walk(filePath, func(path string, info os.FileInfo, err error) error {
++	//		Tainted information is used in a sink.
+ 	err := filepath.Walk(filePath, func(path string, info os.FileInfo, err error) error {
+ 		if err != nil {
+ 			return err

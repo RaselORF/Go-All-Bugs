@@ -1,0 +1,18 @@
+--- /workspace/source/ft/ssrf/05-client-post/src.go
++++ /workspace/source/ft/ssrf/05-client-post/src.go
+@@ -22,6 +22,15 @@
+ 		return
+ 	}
+ 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
++	// OpenRefactory Warning:
++	// Possible Server-Side Request Forgery (SSRF)!
++	// Path:
++	//	File: src.go, Line: 15
++	//		urlParam := r.URL.Query().Get("url")
++	//		Variable 'urlParam' is assigned a tainted value.
++	//	File: src.go, Line: 25
++	//		client.Post(urlParam, "application/x-www-form-urlencoded", strings.NewReader(data.Encode()))
++	//		Tainted information is used in a sink.
+ 	resp, err := client.Post(urlParam, "application/x-www-form-urlencoded", strings.NewReader(data.Encode()))
+ 	if err != nil {
+ 		fmt.Fprintf(w, "Error fetching URL: %v", err)

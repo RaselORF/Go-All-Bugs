@@ -1,0 +1,21 @@
+--- /workspace/source/ft/zip/02-archive-tar-open-wrong/src.go
++++ /workspace/source/ft/zip/02-archive-tar-open-wrong/src.go
+@@ -23,6 +23,18 @@
+ 	defer file.Close()
+ 
+ 	// this is a sink
++	// OpenRefactory Warning:
++	// Possible Untrusted Deserializaiton!
++	// Path:
++	//	File: src.go, Line: 16
++	//		filePath := r.URL.Query().Get("path")
++	//		Variable 'filePath' is assigned a tainted value.
++	//	File: src.go, Line: 18
++	//		file, err := os.Open(filePath)
++	//		Variable 'file' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 26
++	//		tar.NewReader(file)
++	//		Tainted information is used in a sink.
+ 	tr := tar.NewReader(file)
+ 
+ 	// Extract the files from the archive

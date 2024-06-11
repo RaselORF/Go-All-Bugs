@@ -1,0 +1,20 @@
+--- /workspace/source/ft/hcp/05-sqlx-mustopen/src.go
++++ /workspace/source/ft/hcp/05-sqlx-mustopen/src.go
+@@ -17,6 +17,17 @@
+ 
+ func main() {
+ 	connStr := fmt.Sprintf("postgres://%s:%s@localhost/pqgotest", user, password)
++	// OpenRefactory Warning:
++	// Possible Hard Coded Password!
++	// The following code uses a hard coded string which may contain a password.
++	// Check that the string does not contain a password.
++	// Path:
++	//	File: src.go, Line: 19
++	//		connStr := fmt.Sprintf("postgres://%s:%s@localhost/pqgotest", user, password)
++	//		Variable 'connStr' is assigned a tainted value.
++	//	File: src.go, Line: 20
++	//		sqlx.MustOpen("postgres", connStr)
++	//		Tainted information is used in a sink.
+ 	db := sqlx.MustOpen("postgres", connStr)
+ 	defer db.Close()
+ 	query := fmt.Sprintf("SELECT * FROM users WHERE username='%s' AND password='%s'", "username", "password")

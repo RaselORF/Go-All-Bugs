@@ -1,0 +1,21 @@
+--- /workspace/source/ft/ssrf/01-http-get/src.go
++++ /workspace/source/ft/ssrf/01-http-get/src.go
+@@ -13,6 +13,18 @@
+ func handler(w http.ResponseWriter, req *http.Request) {
+ 	target := req.FormValue("target")
+ 	url := fmt.Sprintf("https://%s.example.com/data/", target)
++	// OpenRefactory Warning:
++	// Possible Server-Side Request Forgery (SSRF)!
++	// Path:
++	//	File: src.go, Line: 14
++	//		target := req.FormValue("target")
++	//		Variable 'target' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 15
++	//		url := fmt.Sprintf("https://%s.example.com/data/", target)
++	//		Variable 'url' is assigned a tainted value.
++	//	File: src.go, Line: 16
++	//		http.Get(url)
++	//		Tainted information is used in a sink.
+ 	resp, err := http.Get(url)
+ 	if err != nil {
+ 		log.Println(err)

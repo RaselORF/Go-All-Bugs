@@ -1,0 +1,36 @@
+--- /workspace/source/ft/os/77-map-key-taint/src.go
++++ /workspace/source/ft/os/77-map-key-taint/src.go
+@@ -30,6 +30,33 @@
+ 	pm := get(name)
+ 	for bx := range pm {
+ 		cmd := exec.Command(bx.data)
++		// OpenRefactory Warning:
++		// Possible OS Command Injection!
++		// Path:
++		//	File: src.go, Line: 17
++		//		vals := req.URL.Query()
++		//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 22
++		//		return v.Get("cmd")
++		//		A tainted value is returned from the function call.
++		//	File: src.go, Line: 18
++		//		foo(bar(vals))
++		//		Tainted information is passed through the function call via 'bar(vals)' to the parameter 'name'
++		//	File: src.go, Line: 26
++		//		return map[Box]string{{cn}: "cmd"}
++		//		A tainted value is returned from the function call.
++		//	File: src.go, Line: 30
++		//		pm := get(name)
++		//		Variable 'pm' is assigned a tainted value.
++		//	File: src.go, Line: 31
++		//		for bx := range pm {
++		//		Variable 'bx' is assigned a tainted value.
++		//	File: src.go, Line: 32
++		//		cmd := exec.Command(bx.data)
++		//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 33
++		//		cmd.Run()
++		//		Tainted information is used in a sink.
+ 		cmd.Run()
+ 	}
+ }

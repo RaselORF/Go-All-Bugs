@@ -1,0 +1,21 @@
+--- /workspace/source/ft/os/103-execabs-cmd-context-run/src.go
++++ /workspace/source/ft/os/103-execabs-cmd-context-run/src.go
+@@ -16,6 +16,18 @@
+ 	cmdName := req.URL.Query().Get("cmd")
+ 	ctx, _ := context.WithTimeout(context.Background(), 3*time.Second)
+ 	cmd := execabs.CommandContext(ctx, cmdName)
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 16
++	//		cmdName := req.URL.Query().Get("cmd")
++	//		Variable 'cmdName' is assigned a tainted value.
++	//	File: src.go, Line: 18
++	//		cmd := execabs.CommandContext(ctx, cmdName)
++	//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 19
++	//		cmd.Run()
++	//		Tainted information is used in a sink.
+ 	cmd.Run()
+ }
+ 

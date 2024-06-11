@@ -1,0 +1,18 @@
+--- /workspace/source/ft/zip/01-archive-zip-openreader/src.go
++++ /workspace/source/ft/zip/01-archive-zip-openreader/src.go
+@@ -15,6 +15,15 @@
+ func handler(w http.ResponseWriter, r *http.Request) {
+ 	filePath := r.URL.Query().Get("path")
+ 	// this is a sink
++	// OpenRefactory Warning:
++	// Possible Untrusted Deserializaiton!
++	// Path:
++	//	File: src.go, Line: 16
++	//		filePath := r.URL.Query().Get("path")
++	//		Variable 'filePath' is assigned a tainted value.
++	//	File: src.go, Line: 18
++	//		zip.OpenReader(filePath)
++	//		Tainted information is used in a sink.
+ 	zipFile, _ := zip.OpenReader(filePath)
+ 	defer zipFile.Close()
+ 	for _, file := range zipFile.File {

@@ -1,0 +1,12 @@
+--- /workspace/source/cmc/cmc-1/08-cmc-len-LEQ-Bug06/src.go
++++ /workspace/source/cmc/cmc-1/08-cmc-len-LEQ-Bug06/src.go
+@@ -5,6 +5,9 @@
+ package testdata
+ 
+ func check(s string) bool {
++	// OpenRefactory Warning:
++	// len or cap comparison should be meaningful.
++	// The expression '0 <= len(s)' will always evaluate to true.
+ 	b := 0 <= len(s)
+ 	return b
+ }

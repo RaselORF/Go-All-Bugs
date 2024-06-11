@@ -1,0 +1,21 @@
+--- /workspace/source/ft/ssrf/18-fasthttp-client-do-wrong/src.go
++++ /workspace/source/ft/ssrf/18-fasthttp-client-do-wrong/src.go
+@@ -22,6 +22,18 @@
+ 	resp := fasthttp.AcquireResponse()
+ 	defer fasthttp.ReleaseResponse(resp)
+ 	client := &fasthttp.Client{}
++	// OpenRefactory Warning:
++	// Possible Server-Side Request Forgery (SSRF)!
++	// Path:
++	//	File: src.go, Line: 15
++	//		urlParam := r.URL.Query().Get("url")
++	//		Variable 'urlParam' is assigned a tainted value.
++	//	File: src.go, Line: 18
++	//		req.SetRequestURI(urlParam)
++	//		Tainted information passed through a function call.
++	//	File: src.go, Line: 25
++	//		client.Do(req, resp)
++	//		Tainted information is used in a sink.
+ 	err := client.Do(req, resp)
+ 	if err != nil {
+ 		fmt.Printf("Error: %s\n", err)

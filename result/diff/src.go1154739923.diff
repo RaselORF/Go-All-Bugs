@@ -1,0 +1,21 @@
+--- /workspace/source/ft/session/03-http-setcookie/src.go
++++ /workspace/source/ft/session/03-http-setcookie/src.go
+@@ -19,6 +19,18 @@
+ 			Expires:  time.Now().Add(time.Hour * 1),
+ 			Path:     "/",
+ 		}
++		// OpenRefactory Warning:
++		// Possible Session Fixation!
++		// Path:
++		//	File: src.go, Line: 14
++		//		ID := r.URL.Query().Get("session_id")
++		//		Variable 'ID' is assigned a tainted value.
++		//	File: src.go, Line: 15
++		//		sessionID := &http.Cookie{
++		//		Variable 'sessionID' is assigned a tainted value from the initialization of Field 'Value' (from type Cookie).
++		//	File: src.go, Line: 22
++		//		http.SetCookie(w, sessionID)
++		//		Tainted information is used in a sink.
+ 		http.SetCookie(w, sessionID)
+ 		// Serve the response
+ 		w.Write([]byte("Hello, World!"))

@@ -1,0 +1,11 @@
+--- /workspace/source/csa/07-csa-self-assign-if-statement-Bug09/src.go
++++ /workspace/source/csa/07-csa-self-assign-if-statement-Bug09/src.go
+@@ -4,6 +4,8 @@
+ package testdata
+ 
+ func isEven(a int) bool {
++	// OpenRefactory Warning:
++	// Unnecessary self assignment to a
+ 	if a = a; a%2 == 0 {
+ 		return true
+ 	}

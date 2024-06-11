@@ -1,0 +1,12 @@
+--- /workspace/source/cic/cic-3/01-cic-cors-AllowAll-Bug25/src.go
++++ /workspace/source/cic/cic-3/01-cic-cors-AllowAll-Bug25/src.go
+@@ -17,6 +17,9 @@
+ 	})
+ 
+ 	handler := cors.AllowAll().Handler(mux)
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8080", handler)
+ }
+ 

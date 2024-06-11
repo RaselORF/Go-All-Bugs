@@ -1,0 +1,35 @@
+--- /workspace/source/ft/os/07-os-exec-cmd-context-output/src.go
++++ /workspace/source/ft/os/07-os-exec-cmd-context-output/src.go
+@@ -7,6 +7,7 @@
+ import (
+ 	"context"
+ 	"fmt"
++	"github.com/microcosm-cc/bluemonday"
+ 	"net/http"
+ 	"os/exec"
+ 	"time"
+@@ -17,7 +18,23 @@
+ 	ctx, _ := context.WithTimeout(context.Background(), 3*time.Second)
+ 	cmd := exec.CommandContext(ctx, cmdName)
+ 	op, _ := cmd.Output()
+-	fmt.Fprintln(w, string(op))
++	// OpenRefactory Warning:
++	// Possible Cross-Site Scripting (XSS)!
++	// Path:
++	//	File: src.go, Line: 16
++	//		cmdName := req.URL.Query().Get("cmd")
++	//		Variable 'cmdName' is assigned a tainted value.
++	//	File: src.go, Line: 18
++	//		cmd := exec.CommandContext(ctx, cmdName)
++	//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 19
++	//		op, _ := cmd.Output()
++	//		Variable 'op' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 20
++	//		fmt.Fprintln(w, string(op))
++	//		Tainted information is passed through a function call and is used in a sink.
++	// Fix: iCR sanitizes the tainted input.
++	fmt.Fprintln(w, bluemonday.UGCPolicy().Sanitize(string(op)))
+ }
+ 
+ func main() {

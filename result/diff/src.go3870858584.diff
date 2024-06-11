@@ -1,0 +1,20 @@
+--- /workspace/source/ft/hcp/01-database-sql-hard-coded/src.go
++++ /workspace/source/ft/hcp/01-database-sql-hard-coded/src.go
+@@ -11,6 +11,17 @@
+ 
+ func main() {
+ 	connStr := "user=or dbname=pg password=pgpass sslmode=verify-full"
++	// OpenRefactory Warning:
++	// Possible Hard Coded Password!
++	// The following code uses a hard coded string which may contain a password.
++	// Check that the string does not contain a password.
++	// Path:
++	//	File: src.go, Line: 13
++	//		connStr := "user=or dbname=pg password=pgpass sslmode=verify-full"
++	//		Variable 'connStr' is assigned a tainted value.
++	//	File: src.go, Line: 14
++	//		sql.Open("postgres", connStr)
++	//		Tainted information is used in a sink.
+ 	db, _ := sql.Open("postgres", connStr)
+ 	defer db.Close()
+ 	query := fmt.Sprintf("INSERT INTO users(username, password) VALUES (%s, %s)", "username", "password")

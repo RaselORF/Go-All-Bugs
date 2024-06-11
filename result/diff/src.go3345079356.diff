@@ -1,0 +1,12 @@
+--- /workspace/source/cmc/cmc-2/01-cmc-uint-LSS-Bug06/src.go
++++ /workspace/source/cmc/cmc-2/01-cmc-uint-LSS-Bug06/src.go
+@@ -10,6 +10,9 @@
+ 
+ func main() {
+ 	var a uint
++	// OpenRefactory Warning:
++	// Unsigned integer comparison should be meaningful.
++	// The expression 'a < 0' will always evaluate to false.
+ 	if a < 0 {
+ 		fmt.Println("a is negativee")
+ 	}

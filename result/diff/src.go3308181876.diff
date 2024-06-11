@@ -1,0 +1,30 @@
+--- /workspace/source/ft/xss/22-fiber-v2-context-xml/src.go
++++ /workspace/source/ft/xss/22-fiber-v2-context-xml/src.go
+@@ -4,11 +4,25 @@
+ 
+ package main
+ 
+-import "github.com/gofiber/fiber/v2"
++import (
++	"github.com/gofiber/fiber/v2"
+ 
++	 "github.com/microcosm-cc/bluemonday"
++)
++
+ func MyHandler(c *fiber.Ctx) error {
+ 	data := c.Query("xml")
+-	c.XML(data)
++	// OpenRefactory Warning:
++	// Possible Cross-Site Scripting (XSS)!
++	// Path:
++	//	File: src.go, Line: 10
++	//		data := c.Query("xml")
++	//		Variable 'data' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 11
++	//		c.XML(data)
++	//		Tainted information is used in a sink.
++	// Fix: iCR sanitizes the tainted input.
++	c.XML(bluemonday.UGCPolicy().Sanitize(data))
+ 	return nil
+ }
+ 

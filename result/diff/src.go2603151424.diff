@@ -1,0 +1,23 @@
+--- /workspace/source/ft/xss/05-http-responsewriter-write/src.go
++++ /workspace/source/ft/xss/05-http-responsewriter-write/src.go
+@@ -5,11 +5,19 @@
+ package main
+ 
+ import (
++	"github.com/microcosm-cc/bluemonday"
+ 	"net/http"
+ )
+ 
+ func server(w http.ResponseWriter, r *http.Request) {
+-	w.Write([]byte("<div>" + r.URL.Query().Get("param") + "</div>"))
++	// OpenRefactory Warning:
++	// Possible Cross-Site Scripting (XSS)!
++	// Path:
++	//	File: src.go, Line: 12
++	//		w.Write([]byte("<div>" + r.URL.Query().Get("param") + "</div>"))
++	//		Tainted information is used in a sink.
++	// Fix: iCR sanitizes the tainted input.
++	w.Write(bluemonday.UGCPolicy().SanitizeBytes([]byte("<div>" + r.URL.Query().Get("param") + "</div>")))
+ }
+ 
+ func main() {

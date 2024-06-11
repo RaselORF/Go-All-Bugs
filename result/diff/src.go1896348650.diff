@@ -1,0 +1,11 @@
+--- /workspace/source/ft/log/36-zerolog-warn-msgf/src.go
++++ /workspace/source/ft/log/36-zerolog-warn-msgf/src.go
+@@ -23,5 +23,8 @@
+ 
+ func main() {
+ 	http.HandleFunc("/", handler)
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8090", nil)
+ }

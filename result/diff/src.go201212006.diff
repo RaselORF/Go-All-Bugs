@@ -1,0 +1,18 @@
+--- /workspace/source/ft/ssrf/08-net-lookupip/src.go
++++ /workspace/source/ft/ssrf/08-net-lookupip/src.go
+@@ -13,6 +13,15 @@
+ func handler(w http.ResponseWriter, r *http.Request) {
+ 	urlParam := r.URL.Query().Get("url")
+ 	// Use net.LookupIP to resolve the host name specified in the url parameter
++	// OpenRefactory Warning:
++	// Possible Server-Side Request Forgery (SSRF)!
++	// Path:
++	//	File: src.go, Line: 14
++	//		urlParam := r.URL.Query().Get("url")
++	//		Variable 'urlParam' is assigned a tainted value.
++	//	File: src.go, Line: 16
++	//		net.LookupIP(urlParam)
++	//		Tainted information is used in a sink.
+ 	ips, err := net.LookupIP(urlParam)
+ 	if err != nil {
+ 		fmt.Fprintf(w, "Error resolving IP address: %v", err)

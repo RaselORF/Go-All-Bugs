@@ -1,0 +1,29 @@
+--- /workspace/source/ft/xss/02-template-execute/src.go
++++ /workspace/source/ft/xss/02-template-execute/src.go
+@@ -5,6 +5,7 @@
+ package main
+ 
+ import (
++	"github.com/microcosm-cc/bluemonday"
+ 	"net/http"
+ 	"text/template"
+ )
+@@ -12,7 +13,17 @@
+ func handle(w http.ResponseWriter, r *http.Request) {
+ 	username := r.URL.Query().Get("name")
+ 	tmpl := template.Must(template.ParseFiles("greetings.html"))
+-	tmpl.Execute(w, username)
++	// OpenRefactory Warning:
++	// Possible Cross-Site Scripting (XSS)!
++	// Path:
++	//	File: src.go, Line: 13
++	//		username := r.URL.Query().Get("name")
++	//		Variable 'username' is assigned a tainted value.
++	//	File: src.go, Line: 15
++	//		tmpl.Execute(w, username)
++	//		Tainted information is used in a sink.
++	// Fix: iCR sanitizes the tainted input.
++	tmpl.Execute(w, bluemonday.UGCPolicy().Sanitize(username))
+ }
+ 
+ func main() {

@@ -1,0 +1,27 @@
+--- /workspace/source/ft/os/80-map-value-taint/src.go
++++ /workspace/source/ft/os/80-map-value-taint/src.go
+@@ -13,6 +13,24 @@
+ 	comms := vals["cmd"]
+ 	for _, cm := range comms {
+ 		cmd := exec.Command(cm)
++		// OpenRefactory Warning:
++		// Possible OS Command Injection!
++		// Path:
++		//	File: src.go, Line: 12
++		//		vals := req.URL.Query()
++		//		Variable 'vals' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 13
++		//		comms := vals["cmd"]
++		//		Variable 'comms' is assigned a tainted value.
++		//	File: src.go, Line: 14
++		//		for _, cm := range comms {
++		//		Variable 'cm' is assigned a tainted value.
++		//	File: src.go, Line: 15
++		//		cmd := exec.Command(cm)
++		//		Variable 'cmd' is assigned a tainted value which is passed through a function call.
++		//	File: src.go, Line: 16
++		//		cmd.Run()
++		//		Tainted information is used in a sink.
+ 		cmd.Run()
+ 	}
+ }

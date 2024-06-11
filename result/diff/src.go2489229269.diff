@@ -1,0 +1,11 @@
+--- /workspace/source/ft/weak-hash/02-sha1-sum/src.go
++++ /workspace/source/ft/weak-hash/02-sha1-sum/src.go
+@@ -11,6 +11,8 @@
+ 
+ func main() {
+ 	password := []byte("MyP@ssw0rd")
++	// OpenRefactory Warning:
++	// Hash generated from weak hashing algorithm!
+ 	hash := sha1.Sum(password)
+ 	fmt.Printf("%x\n", hash)
+ }

@@ -1,0 +1,20 @@
+--- /workspace/source/ft/hcp/02-database-sql-sprintf/src.go
++++ /workspace/source/ft/hcp/02-database-sql-sprintf/src.go
+@@ -16,6 +16,17 @@
+ 
+ func main() {
+ 	connStr := fmt.Sprintf("postgres://%s:%s@localhost/pqgotest", user, password)
++	// OpenRefactory Warning:
++	// Possible Hard Coded Password!
++	// The following code uses a hard coded string which may contain a password.
++	// Check that the string does not contain a password.
++	// Path:
++	//	File: src.go, Line: 18
++	//		connStr := fmt.Sprintf("postgres://%s:%s@localhost/pqgotest", user, password)
++	//		Variable 'connStr' is assigned a tainted value.
++	//	File: src.go, Line: 19
++	//		sql.Open("postgres", connStr)
++	//		Tainted information is used in a sink.
+ 	db, _ := sql.Open("postgres", connStr)
+ 	defer db.Close()
+ 	query := fmt.Sprintf("INSERT INTO users(username, password) VALUES (%s, %s)", "username", "password")

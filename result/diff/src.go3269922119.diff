@@ -1,0 +1,12 @@
+--- /workspace/source/cmc/cmc-2/06-cmc-uint-GEQ-Bug06/src.go
++++ /workspace/source/cmc/cmc-2/06-cmc-uint-GEQ-Bug06/src.go
+@@ -10,6 +10,9 @@
+ 
+ func test() {
+ 	var a uint
++	// OpenRefactory Warning:
++	// Unsigned integer comparison should be meaningful.
++	// The expression 'a >= 0' will always evaluate to true.
+ 	if a >= 0 {
+ 		fmt.Println("value is non-negative")
+ 	}

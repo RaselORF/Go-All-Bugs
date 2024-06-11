@@ -1,0 +1,11 @@
+--- /workspace/source/ft/weak-hash/05-hash-fnv-sum32a/src.go
++++ /workspace/source/ft/weak-hash/05-hash-fnv-sum32a/src.go
+@@ -14,6 +14,8 @@
+ 	cert := os.Getenv("CERT")
+ 	h := fnv.New32a()
+ 	h.Write([]byte("Not sensitive value"))
++	// OpenRefactory Warning:
++	// Hash generated from weak hashing algorithm!
+ 	h.Write([]byte(cert))
+ 	hash := h.Sum(nil)
+ 	fmt.Printf("%x\n", hash)

@@ -1,0 +1,11 @@
+--- /workspace/source/ft/os/104-execabs-cmd-run/src.go
++++ /workspace/source/ft/os/104-execabs-cmd-run/src.go
+@@ -18,5 +18,8 @@
+ 
+ func main() {
+ 	http.HandleFunc("/", handler)
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8090", nil)
+ }

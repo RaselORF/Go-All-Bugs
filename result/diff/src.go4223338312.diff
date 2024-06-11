@@ -1,0 +1,11 @@
+--- /workspace/source/cur/cur-2/01-recover-not-in-defer-Bug10/src.go
++++ /workspace/source/cur/cur-2/01-recover-not-in-defer-Bug10/src.go
+@@ -14,6 +14,8 @@
+ 
+ func fun() {
+ 	defer func() {
++		// OpenRefactory Warning:
++		// recover should be called directly by a deferred function.
+ 		callRecover()
+ 	}()
+ 	panic("Lets panic")

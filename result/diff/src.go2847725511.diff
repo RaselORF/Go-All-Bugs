@@ -1,0 +1,24 @@
+--- /workspace/source/ft/os/10-syscall-start-process-FLAKY/src.go
++++ /workspace/source/ft/os/10-syscall-start-process-FLAKY/src.go
+@@ -29,6 +29,21 @@
+ 	}
+ 
+ 	// Wait for the process to exit
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 15
++	//		cmdName := req.FormValue("cmd")
++	//		Variable 'cmdName' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 16
++	//		args := []string{req.FormValue("arg0")}
++	//		Variable 'args' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 26
++	//		process, err := os.StartProcess(cmdName, args, procAttr)
++	//		Variable 'process' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 32
++	//		process.Wait()
++	//		Tainted information is used in a sink.
+ 	status, err := process.Wait()
+ 	if err != nil {
+ 		fmt.Println(err.Error())

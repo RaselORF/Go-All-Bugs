@@ -1,0 +1,21 @@
+--- /workspace/source/ft/path/19-path-join/src.go
++++ /workspace/source/ft/path/19-path-join/src.go
+@@ -15,6 +15,18 @@
+ 	filePath := "/home/abc/Desktop/"
+ 
+ 	fullpath := path.Join(filePath, fileName)
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 14
++	//		fileName := r.URL.Query().Get("path")
++	//		Variable 'fileName' is assigned a tainted value.
++	//	File: src.go, Line: 17
++	//		fullpath := path.Join(filePath, fileName)
++	//		Variable 'fullpath' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 18
++	//		os.Create(fullpath)
++	//		Tainted information is used in a sink.
+ 	file, _ := os.Create(fullpath)
+ 	defer file.Close()
+ 	w.Write([]byte("Hello"))

@@ -1,0 +1,16 @@
+--- /workspace/source/mhsc/mhsc-2/04-mhsc-HttpOnly-flag-missing-composite-expr-no-fix-Bug-26/src.go
++++ /workspace/source/mhsc/mhsc-2/04-mhsc-HttpOnly-flag-missing-composite-expr-no-fix-Bug-26/src.go
+@@ -15,9 +15,10 @@
+ func MyHandler(w http.ResponseWriter, r *http.Request) {
+ 	session, _ := store.Get(r, "session-name")
+ 	a := sessions.Options{
+-		Path:   "/",
+-		MaxAge: 3600,
+-		Secure: true,
++		Path:     "/",
++		MaxAge:   3600,
++		Secure:   true,
++		HttpOnly: true,
+ 	}
+ 	session.Options = &a
+ 	err := session.Save(r, w)

@@ -1,0 +1,11 @@
+--- /workspace/source/ft/weak-hash/13-md5-sum/src.go
++++ /workspace/source/ft/weak-hash/13-md5-sum/src.go
+@@ -12,6 +12,8 @@
+ func main() {
+ 	password := []byte("MyP@ssw0rd")
+ 	m := md5.New()
++	// OpenRefactory Warning:
++	// Hash generated from weak hashing algorithm!
+ 	m.Write(password)
+ 	hash := m.Sum(nil)
+ 	fmt.Printf("%x\n", hash)

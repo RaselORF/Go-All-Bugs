@@ -1,0 +1,21 @@
+--- /workspace/source/ft/ssrf/08-net-lookupip/src.go
++++ /workspace/source/ft/ssrf/08-net-lookupip/src.go
+@@ -19,6 +19,18 @@
+ 		return
+ 	}
+ 	// Print the IP address(es) returned by net.LookupIP
++	// OpenRefactory Warning:
++	// Possible Cross-Site Scripting (XSS)!
++	// Path:
++	//	File: src.go, Line: 14
++	//		urlParam := r.URL.Query().Get("url")
++	//		Variable 'urlParam' is assigned a tainted value.
++	//	File: src.go, Line: 16
++	//		ips, err := net.LookupIP(urlParam)
++	//		Variable 'ips' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 22
++	//		fmt.Fprintf(w, "IP addresses: %v", ips)
++	//		Tainted information is used in a sink.
+ 	fmt.Fprintf(w, "IP addresses: %v", ips)
+ }
+ 

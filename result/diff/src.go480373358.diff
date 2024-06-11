@@ -1,0 +1,21 @@
+--- /workspace/source/ft/path/26-io-CopyN-dest/src.go
++++ /workspace/source/ft/path/26-io-CopyN-dest/src.go
+@@ -22,6 +22,18 @@
+ 	defer src.Close()
+ 
+ 	// Create destination file
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 14
++	//		return r.URL.Query().Get("fname")
++	//		A tainted value is returned from the function call.
++	//	File: src.go, Line: 17
++	//		destFileName := getDest(r)
++	//		Variable 'destFileName' is assigned a tainted value.
++	//	File: src.go, Line: 25
++	//		os.Create(destFileName)
++	//		Tainted information is used in a sink.
+ 	dst, err := os.Create(destFileName)
+ 	if err != nil {
+ 		panic(err)

@@ -1,0 +1,18 @@
+--- /workspace/source/ft/or/03-gin-redirect/src.go
++++ /workspace/source/ft/or/03-gin-redirect/src.go
+@@ -12,6 +12,15 @@
+ 
+ func handler(c *gin.Context) {
+ 	url := c.Param("url")
++	// OpenRefactory Warning:
++	// Possible URL Redirection To Untrusted Site (Open Redirect)!
++	// Path:
++	//	File: src.go, Line: 14
++	//		url := c.Param("url")
++	//		Variable 'url' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 15
++	//		c.Redirect(http.StatusMovedPermanently, url)
++	//		Tainted information is used in a sink.
+ 	c.Redirect(http.StatusMovedPermanently, url)
+ }
+ func main() {

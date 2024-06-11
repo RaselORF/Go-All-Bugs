@@ -1,0 +1,11 @@
+--- /workspace/source/mhsc/mhsc-2/01-mhsc-HttpOnly-flag-false-Bug-26/src.go
++++ /workspace/source/mhsc/mhsc-2/01-mhsc-HttpOnly-flag-false-Bug-26/src.go
+@@ -17,7 +17,7 @@
+ 	session.Options = &sessions.Options{
+ 		Path:     "/",
+ 		MaxAge:   3600,
+-		HttpOnly: false,
++		HttpOnly: true,
+ 		Secure:   true,
+ 	}
+ 	err := session.Save(r, w)

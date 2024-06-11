@@ -1,0 +1,12 @@
+--- /workspace/source/cmc/cmc-2/07-cmc-uint32-GEQ-Bug06/src.go
++++ /workspace/source/cmc/cmc-2/07-cmc-uint32-GEQ-Bug06/src.go
+@@ -9,6 +9,9 @@
+ }
+ 
+ func test() bool {
++	// OpenRefactory Warning:
++	// Unsigned integer comparison should be meaningful.
++	// The expression 'getUint() >= 0' will always evaluate to true.
+ 	return getUint() >= 0
+ }
+ 

@@ -1,0 +1,36 @@
+--- /workspace/source/ft/os/23-pass-taint-via-receiver-field/src.go
++++ /workspace/source/ft/os/23-pass-taint-via-receiver-field/src.go
+@@ -15,6 +15,33 @@
+ }
+ 
+ func (b Box) Run() {
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 27
++	//		return req.URL.Query()
++	//		A tainted value is returned from the function call.
++	//	File: src.go, Line: 31
++	//		vals := getUrlValues(req)
++	//		Variable 'vals' is assigned a tainted value.
++	//	File: src.go, Line: 32
++	//		return vals.Get("cmd")
++	//		A tainted value is returned from the function call.
++	//	File: src.go, Line: 22
++	//		cmdName := getCmdName(req)
++	//		Variable 'cmdName' is assigned a tainted value.
++	//	File: src.go, Line: 23
++	//		RunCmd(cmdName)
++	//		Tainted information is passed through the function call via 'cmdName' to the parameter 'name'
++	//	File: src.go, Line: 36
++	//		box := Box{exec.Command(name)}
++	//		Variable 'box' is assigned a tainted value.
++	//	File: src.go, Line: 37
++	//		box.Run()
++	//		Tainted information is passed through the function call via 'box' to the receiver 'b' through the field 'cmd' (from type Box)
++	//	File: src.go, Line: 18
++	//		b.cmd.Run()
++	//		Tainted information is used in a sink.
+ 	b.cmd.Run()
+ }
+ 

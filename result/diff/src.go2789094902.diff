@@ -1,0 +1,32 @@
+--- /workspace/source/ft/path/12-os-readfile/src.go
++++ /workspace/source/ft/path/12-os-readfile/src.go
+@@ -6,6 +6,7 @@
+ 
+ import (
+ 	"fmt"
++	"github.com/microcosm-cc/bluemonday"
+ 	"net/http"
+ 	"os"
+ )
+@@ -17,7 +18,20 @@
+ 		fmt.Println("Error reading file:", err)
+ 		return
+ 	}
+-	w.Write(data)
++	// OpenRefactory Warning:
++	// Possible Cross-Site Scripting (XSS)!
++	// Path:
++	//	File: src.go, Line: 14
++	//		path := r.URL.Query().Get("path")
++	//		Variable 'path' is assigned a tainted value.
++	//	File: src.go, Line: 15
++	//		data, err := os.ReadFile(path)
++	//		Variable 'data' is assigned a tainted value which is passed through a function call.
++	//	File: src.go, Line: 20
++	//		w.Write(data)
++	//		Tainted information is used in a sink.
++	// Fix: iCR sanitizes the tainted input.
++	w.Write(bluemonday.UGCPolicy().SanitizeBytes(data))
+ }
+ 
+ func main() {

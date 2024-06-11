@@ -1,0 +1,18 @@
+--- /workspace/source/ft/xss/12-gin-context-xml/src.go
++++ /workspace/source/ft/xss/12-gin-context-xml/src.go
+@@ -27,6 +27,15 @@
+ 		if err := c.BindJSON(&newUser); err != nil {
+ 			fmt.Print(err)
+ 		}
++		// OpenRefactory Warning:
++		// Possible Cross-Site Scripting (XSS)!
++		// Path:
++		//	File: src.go, Line: 27
++		//		c.BindJSON(&newUser)
++		//		Tainted information is coming from an external source.
++		//	File: src.go, Line: 30
++		//		c.XML(http.StatusCreated, newUser)
++		//		Tainted information is used in a sink.
+ 		c.XML(http.StatusCreated, newUser)
+ 	})
+ 

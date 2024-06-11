@@ -1,0 +1,24 @@
+--- /workspace/source/ft/sql/06-gosqljson-exec/src.go
++++ /workspace/source/ft/sql/06-gosqljson-exec/src.go
+@@ -23,6 +23,21 @@
+ 	password := r.FormValue("password")
+ 	query := fmt.Sprintf("SELECT * FROM users WHERE username='%s' AND password='%s'", username, password)
+ 
++	// OpenRefactory Warning:
++	// Possible SQL Injection!
++	// Path:
++	//	File: src.go, Line: 22
++	//		username := r.FormValue("username")
++	//		Variable 'username' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 23
++	//		password := r.FormValue("password")
++	//		Variable 'password' is assigned a tainted value from an external source.
++	//	File: src.go, Line: 24
++	//		query := fmt.Sprintf("SELECT * FROM users WHERE username='%s' AND password='%s'", username, password)
++	//		Variable 'query' is assigned a tainted value.
++	//	File: src.go, Line: 26
++	//		gosqljson.Exec(db, query)
++	//		Tainted information is used in a sink.
+ 	gosqljson.Exec(db, query)
+ }
+ func main() {

@@ -1,0 +1,11 @@
+--- /workspace/source/cur/cur-2/03-recover-not-in-defer-Bug10/src.go
++++ /workspace/source/cur/cur-2/03-recover-not-in-defer-Bug10/src.go
+@@ -18,6 +18,8 @@
+ }
+ 
+ func baz() {
++	// OpenRefactory Warning:
++	// recover should be called directly by a deferred function.
+ 	callRecover()
+ }
+ 

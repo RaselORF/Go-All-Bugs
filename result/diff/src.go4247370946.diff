@@ -1,0 +1,12 @@
+--- /workspace/source/cic/cic-1/01-cic-cors-set-Bug25/src.go
++++ /workspace/source/cic/cic-1/01-cic-cors-set-Bug25/src.go
+@@ -9,6 +9,9 @@
+ func main() {
+ 	mux := http.NewServeMux()
+ 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
++		// OpenRefactory Warning:
++		// Setting 'Access-Control-Allow-Origin' to '*' will enable
++		// a loose CORS policy which is security sensitive.
+ 		w.Header().Set("Access-Control-Allow-Origin", "*")
+ 		w.Write([]byte("{\"hello\": \"world\"}"))
+ 	})

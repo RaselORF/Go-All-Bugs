@@ -1,0 +1,11 @@
+--- /workspace/source/ft/rrg/04-crypto-sha512-math-rand/src.go
++++ /workspace/source/ft/rrg/04-crypto-sha512-math-rand/src.go
+@@ -17,6 +17,8 @@
+ 	rand.Read(salt)
+ 
+ 	saltedVal := append(val, salt...)
++	// OpenRefactory Warning:
++	// Sensitive usage of pseudo random number!
+ 	hashed := sha512.Sum512(saltedVal)
+ 	return hex.EncodeToString(hashed[:])
+ }

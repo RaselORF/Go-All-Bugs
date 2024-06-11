@@ -1,0 +1,18 @@
+--- /workspace/source/ft/desrl/06-yaml-unmarshal/src.go
++++ /workspace/source/ft/desrl/06-yaml-unmarshal/src.go
+@@ -20,6 +20,15 @@
+ 
+ func handler(w http.ResponseWriter, r *http.Request) {
+ 	fileName := r.URL.Query().Get("file")
++	// OpenRefactory Warning:
++	// Possible Path Manipulation!
++	// Path:
++	//	File: src.go, Line: 22
++	//		fileName := r.URL.Query().Get("file")
++	//		Variable 'fileName' is assigned a tainted value.
++	//	File: src.go, Line: 23
++	//		ioutil.ReadFile(fileName)
++	//		Tainted information is used in a sink.
+ 	file, err := ioutil.ReadFile(fileName)
+ 	if err != nil {
+ 		log.Fatal(err)

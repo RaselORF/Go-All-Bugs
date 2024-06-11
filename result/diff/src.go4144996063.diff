@@ -1,0 +1,11 @@
+--- /workspace/source/ft/desrl/01-encoding-json-decoder-decode/src.go
++++ /workspace/source/ft/desrl/01-encoding-json-decoder-decode/src.go
+@@ -39,5 +39,8 @@
+ 
+ func main() {
+ 	http.HandleFunc("/", handler)
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8090", nil)
+ }

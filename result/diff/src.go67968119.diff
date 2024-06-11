@@ -1,0 +1,18 @@
+--- /workspace/source/ft/os/08-syscall-exec/src.go
++++ /workspace/source/ft/os/08-syscall-exec/src.go
+@@ -13,6 +13,15 @@
+ func handler(w http.ResponseWriter, req *http.Request) {
+ 	cmdName := req.URL.Query().Get("cmd")
+ 	args := []string{"-a", "-l", "-h"}
++	// OpenRefactory Warning:
++	// Possible OS Command Injection!
++	// Path:
++	//	File: src.go, Line: 14
++	//		cmdName := req.URL.Query().Get("cmd")
++	//		Variable 'cmdName' is assigned a tainted value.
++	//	File: src.go, Line: 16
++	//		syscall.Exec(cmdName, args, os.Environ())
++	//		Tainted information is used in a sink.
+ 	syscall.Exec(cmdName, args, os.Environ())
+ }
+ 

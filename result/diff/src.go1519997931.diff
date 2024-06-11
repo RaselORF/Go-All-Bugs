@@ -1,0 +1,11 @@
+--- /workspace/source/ft/path/04-ioutil-tempFile/src.go
++++ /workspace/source/ft/path/04-ioutil-tempFile/src.go
+@@ -25,5 +25,8 @@
+ 
+ func main() {
+ 	http.HandleFunc("/", handler)
++	// OpenRefactory Warning:
++	// ListenAndServe does not set any timeout which may cause
++	// server to wait indefinitely.
+ 	http.ListenAndServe(":8090", nil)
+ }

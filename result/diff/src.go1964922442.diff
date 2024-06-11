@@ -1,0 +1,18 @@
+--- /workspace/source/ft/ssrf/25-fasthttp-hostclient-post/src.go
++++ /workspace/source/ft/ssrf/25-fasthttp-hostclient-post/src.go
+@@ -21,6 +21,15 @@
+ 	args := &fasthttp.Args{}
+ 	args.Add("username", "johndoe")
+ 	args.Add("password", "secretpassword")
++	// OpenRefactory Warning:
++	// Possible Server-Side Request Forgery (SSRF)!
++	// Path:
++	//	File: src.go, Line: 15
++	//		urlParam := r.URL.Query().Get("url")
++	//		Variable 'urlParam' is assigned a tainted value.
++	//	File: src.go, Line: 24
++	//		client.Post(nil, urlParam, args)
++	//		Tainted information is used in a sink.
+ 	resp, _, _ := client.Post(nil, urlParam, args)
+ 	fmt.Print(resp)
+ 	fmt.Fprintf(w, "Hello World")

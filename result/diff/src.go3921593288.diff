@@ -1,0 +1,12 @@
+--- /workspace/source/cic/cic-4/02-cic-cors-New-Bug25/src.go
++++ /workspace/source/cic/cic-4/02-cic-cors-New-Bug25/src.go
+@@ -13,6 +13,9 @@
+ const starVal = "*"
+ 
+ func main() {
++	// OpenRefactory Warning:
++	// Using default 'AllowOrigins' or setting '*' in 'AllowOrigins'
++	// will enable a loose CORS policy which is security sensitive.
+ 	a := cors.New(cors.Config{
+ 		AllowOrigins: starVal,
+ 		AllowHeaders: "Origin, Content-Type, Accept",
